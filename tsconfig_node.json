@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "declaration": false,
+        "listFiles": true
+        //"noResolve": true
+        
+        //"mapRoot": "",
+        //"outDir": "desc",
+        //"sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "typings"
+    ]
+}

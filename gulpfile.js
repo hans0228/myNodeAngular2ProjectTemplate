@@ -4,7 +4,44 @@ var merge = require("merge-stream")();
 var rimraf = require("rimraf");
 var runSequence = require("run-sequence");
 
+var ts = require("gulp-typescript");
+var sourcemaps = require("gulp-sourcemaps");
+var path = require('path');
+
+//=================================== Global Variable ===================================
+
+//var webrootPath = "../Web/wwwroot";
+var webrootPath = "./test/web";
+var webrootPathCopy = webrootPath + "/b";
+var tempPath = "_temp";
+
 //=================================== Method ===================================
+
+var tsCompiler = function(
+    pathArr,
+    tsconfigPath,
+    sroucemapPostfix,
+    targetPath,
+    isUglify) {
+
+    return gulp.src(pathArr)
+        .pipe(sourcemaps.init())
+        .pipe(ts(ts.createProject(tsconfigPath)))
+        .js
+        //.pipe(uglify())
+        .pipe(sourcemaps.write("./", {
+            includeContent: false,
+            sourceRoot: function(file) {
+                var arr = file.relative.split("/");
+                var prefix = "";
+                for (var i = 0; i < arr.length; i++) {
+                    prefix += "../";
+                }
+                return prefix + sroucemapPostfix;
+            }
+        }))
+        .pipe(gulp.dest(targetPath));
+};
 
 var deletePathAsync = (str) => {
     var p = new Promise((resolve, reject) => {
@@ -25,50 +62,20 @@ var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 };
 
-gulp.task("copy", () => {
-
-    merge.add(getCopyFilesPipe(
-        "./src/Web/appsettings.json*",
-        "./src/Web.Test"
-    ));
-
-    return merge;
-
-});
-
-gulp.task("delete", (cb) => {
-
-    deletePathAsync("./src/Core/appsettings.json")
-        .then(() => {
-            deletePathAsync("./src/Core/Migrations");
-        })
-        .catch(() => {
-            console.log("error")
-        })
-        .then(() => {
-            cb();
-        });
-
-});
-
 //=================================== Tasks ===================================
 
-//restore
-gulp.task("restore", shell.task([
 
-    "cd src/Core && dnu restore",
-    "cd src/Core.Test && dnu restore",
-    "cd src/Web && dnu restore",
-    "cd src/Web.Test && dnu restore"
 
-]));
+gulp.task('default', function() {
 
-//run test
-gulp.task("test", function(cb) {
-    runSequence(
-        "copySettingFileToWebTest",
-        "testWebTestAndCoreTest",
-        "cleanWebTestSettingFile",
-        cb
+    return tsCompiler(
+        [
+            './src/web/**/*.ts',
+        ],
+        'tsconfig_node.json',
+        "src/web",
+        "./dist/web",
+        false
     );
+
 });
