@@ -8,23 +8,21 @@ export class HomeController extends BaseController {
     constructor(public app: exp.Application) {
         super(app);
 
-
-
         this.init();
     }
 
     init(): void {
 
-        // this.app.get("/", (req: exp.Request, res: exp.Response) => {
+        this.app.get("/", (req: exp.Request, res: exp.Response) => {
 
-        //     var vm = {
-        //         title: "myApp Title",
-        //         content: "data from server content"
-        //     };
+            var vm = {
+                title: "myApp Title",
+                content: "data from server content"
+            };
 
-        //     res.render("./home/indexView", vm);
+            res.render("./home/homeView", vm);
 
-        // });
+        });
 
     }
 

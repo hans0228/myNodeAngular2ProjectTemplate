@@ -8,12 +8,14 @@ var ts = require("gulp-typescript");
 var sourcemaps = require("gulp-sourcemaps");
 var path = require('path');
 
+var nodemon = require("gulp-nodemon");
+
 //=================================== Global Variable ===================================
 
-//var webrootPath = "../Web/wwwroot";
-var webrootPath = "./test/web";
-var webrootPathCopy = webrootPath + "/b";
-var tempPath = "_temp";
+// var webrootPath = "../Web/wwwroot";
+// var webrootPath = "./dist/web";
+// var webrootPathCopy = webrootPath + "/b";
+// var tempPath = "_temp";
 
 //=================================== Method ===================================
 
@@ -64,9 +66,30 @@ var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 //=================================== Tasks ===================================
 
+gulp.task("clean", (cb) => {
 
+    deletePathAsync("./dist")
+        .then(() => {
+            deletePathAsync("./test");
+        })
+        .catch(() => { })
+        .then(() => {
+            cb();
+        });
 
-gulp.task('default', function() {
+});
+
+gulp.task("copyfiles", () => {
+
+    var html = gulp.src("./src/**/*.html")
+        .pipe(gulp.dest("./dist"));
+    merge.add(html);
+
+    return merge;
+
+});
+
+gulp.task('ts_web', () => {
 
     return tsCompiler(
         [
@@ -79,3 +102,33 @@ gulp.task('default', function() {
     );
 
 });
+
+gulp.task("default", (cb) => {
+    runSequence(
+        "clean",
+        [
+            "ts_web",
+            "copyfiles",
+        ],
+        cb
+    );
+});
+
+
+gulp.task("server", () => {
+
+    var serverfilePath = "./dist/web/server.js";
+
+    nodemon({
+        script: serverfilePath,
+        ext: "html js",
+        env: { 'NODE_ENV': 'development' }
+        //ignore: ["ignored.js"],
+        //tasks: ["lint"] ,
+    }).on("restart", () => {
+        console.log("restarted!")
+    });
+
+});
+
+

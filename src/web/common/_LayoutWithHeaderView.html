@@ -1,0 +1,21 @@
+@html.extend("common/_LayoutView", function(model){
+
+    @html.block('content', function(model){
+
+<ul>
+    <li><a href="/">Home</a></li>
+</ul> 
+<br />
+
+<div>
+    @html.block('content')
+</div>
+
+    })
+
+    @html.block('script', function(model){
+
+        @html.block('script')
+
+    })
+})

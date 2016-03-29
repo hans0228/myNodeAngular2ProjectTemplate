@@ -10,10 +10,10 @@ import {init} from "./_index";
 var app = exp();
 
 // view engine setup
-// var vash = require("vash");
-// app.engine("html", vash.__express);
-// app.set("views", path.join(__dirname, "./"));
-// app.set("view engine", "html");
+var vash = require("vash");
+app.engine("html", vash.__express);
+app.set("views", path.join(__dirname, "./"));
+app.set("view engine", "html");
 
 // uncomment after placing your favicon in /public
 //var favicon = require('serve-favicon');
@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 app.use(exp.static(path.join(__dirname, "wwwroot")));
-console.log("server.ts, path", __dirname);
 
 //connect to db
 // var db = new dbM.core.common.DBContext();
@@ -47,7 +46,9 @@ init(app);
 //server start
 var port: number = process.env.port || 1234;
 app.listen(port);
-console.log("server start...");
+
+console.log("server.ts, path", __dirname);
+console.log(`::${port} server start...`);
 
 
 //app.use('/', routes);

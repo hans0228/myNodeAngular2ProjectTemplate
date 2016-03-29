@@ -1,0 +1,14 @@
+@html.extend("common/_LayoutWithHeaderView", function(model){
+
+    @html.append('content', function(model){
+
+<div ui-view></div>
+
+<hr />
+<h1>@model.content</h1>
+<hr/>
+
+
+    })
+
+})
