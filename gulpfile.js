@@ -83,7 +83,7 @@ gulp.task("clean", (cb) => {
 gulp.task("copyAssetsToTest", () => {
 
     var m = merge();
-    
+
     var asset = gulp.src([
         "./src/**/*.html",
         "./src/**/*.css",
@@ -96,7 +96,7 @@ gulp.task("copyAssetsToTest", () => {
 
 gulp.task("copyTestToDist", () => {
 
-    var m = merge();    
+    var m = merge();
 
     var all = gulp.src([
         "./test/**/*",
@@ -110,27 +110,55 @@ gulp.task("copyTestToDist", () => {
 
 });
 
-gulp.task('ts_web', () => {
+gulp.task('ts_compile', () => {
 
-    return tsCompiler(
+    var m = merge();
+
+    var tsWeb = tsCompiler(
         [
-            './src/web/**/*.ts',
+            "./src/web/**/*.ts",
         ],
-        'tsconfig_node.json',
+        "tsconfig_node.json",
         "src/web",
         "./test/web",
         false
     );
+    m.add(tsWeb);
+
+    var tsCore = tsCompiler(
+        [
+            "./src/core/**/*.ts",
+        ],
+        "tsconfig_node.json",
+        "src/core",
+        "./test/core",
+        false
+    );
+    m.add(tsCore);
+
+    var tsCoreTest = tsCompiler(
+        [
+            "./src/core.test/**/*.ts",
+        ],
+        "tsconfig_node.json",
+        "src/core.test",
+        "./test/core.test",
+        false
+    );
+    m.add(tsCoreTest);
+
+    return m;
 
 });
 
 gulp.task("test_node", function() {
 
-    return gulp.src([
-        "./test/core.client/**/*.js",
-        "./test/core.test/**/*.js",
-        "./test/web.test/**/*.js"
-    ], {
+    return gulp.src(
+        [
+            "./test/core.client/**/*.js",
+            "./test/core.test/**/*.js",
+            "./test/web.test/**/*.js"
+        ], {
             read: false
         })
         .pipe(mocha({
@@ -143,11 +171,13 @@ gulp.task("default", (cb) => {
     runSequence(
         "clean",
         [
-            "ts_web",
+            "ts_compile",
             "copyAssetsToTest",
         ],
-        "copyTestToDist",
-        "test_node",
+        [
+            "copyTestToDist",
+            "test_node",
+        ],
         cb
     );
 });
