@@ -1,8 +1,9 @@
 var gulp = require("gulp");
 var shell = require("gulp-shell");
-var merge = require("merge-stream")();
+var merge = require("merge-stream");
 var rimraf = require("rimraf");
 var runSequence = require("run-sequence");
+var mocha = require("gulp-mocha");
 
 var ts = require("gulp-typescript");
 var sourcemaps = require("gulp-sourcemaps");
@@ -68,9 +69,9 @@ var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 gulp.task("clean", (cb) => {
 
-    deletePathAsync("./dist")
+    deletePathAsync("./test")
         .then(() => {
-            deletePathAsync("./test");
+            deletePathAsync("./dist");
         })
         .catch(() => { })
         .then(() => {
@@ -79,13 +80,33 @@ gulp.task("clean", (cb) => {
 
 });
 
-gulp.task("copyfiles", () => {
+gulp.task("copyAssetsToTest", () => {
 
-    var html = gulp.src("./src/**/*.html")
-        .pipe(gulp.dest("./dist"));
-    merge.add(html);
+    var m = merge();
+    
+    var asset = gulp.src([
+        "./src/**/*.html",
+        "./src/**/*.css",
+    ]).pipe(gulp.dest("./test"));
+    m.add(asset);
 
-    return merge;
+    return m;
+
+});
+
+gulp.task("copyTestToDist", () => {
+
+    var m = merge();    
+
+    var all = gulp.src([
+        "./test/**/*",
+        "!./test/client.test{,/**/*}",
+        "!./test/core.test{,/**/*}",
+        "!./test/web.test{,/**/*}",
+    ]).pipe(gulp.dest("./dist"));
+    m.add(all);
+
+    return m;
 
 });
 
@@ -97,9 +118,24 @@ gulp.task('ts_web', () => {
         ],
         'tsconfig_node.json',
         "src/web",
-        "./dist/web",
+        "./test/web",
         false
     );
+
+});
+
+gulp.task("test_node", function() {
+
+    return gulp.src([
+        "./test/core.client/**/*.js",
+        "./test/core.test/**/*.js",
+        "./test/web.test/**/*.js"
+    ], {
+            read: false
+        })
+        .pipe(mocha({
+            reporter: "spec"
+        }));
 
 });
 
@@ -108,12 +144,13 @@ gulp.task("default", (cb) => {
         "clean",
         [
             "ts_web",
-            "copyfiles",
+            "copyAssetsToTest",
         ],
+        "copyTestToDist",
+        "test_node",
         cb
     );
 });
-
 
 gulp.task("server", () => {
 
