@@ -1,16 +1,14 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
-        
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
         "declaration": false,
         "listFiles": true
         //"noResolve": true
-        
         //"mapRoot": "",
         //"outDir": "desc",
         //"sourceMap": true

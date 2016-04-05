@@ -146,6 +146,18 @@ gulp.task('ts_compile', () => {
         false
     );
     m.add(tsCoreTest);
+    
+    
+    var tsClient = tsCompiler(
+        [
+            "./src/client/**/*.ts",
+        ],
+        "tsconfig_angular2.json",
+        "src/client",
+        "./test/client",
+        false
+    );
+    m.add(tsClient);
 
     return m;
 
