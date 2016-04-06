@@ -8,38 +8,35 @@
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
-    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="/scripts/node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="/scripts/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="/scripts/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="/scripts/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/scripts/node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
 
 
     <script>
         System.config({
         packages: {      
-            format: 'register', 
+          "scripts": {
+            format: 'register',
             defaultExtension: 'js'
-              
-        //   app: {
-        //     format: 'register',
-        //     defaultExtension: 'js'
-        //   }
+          }
         }
-      });
-      System.import('app')
-            .then(null, console.error.bind(console));
+    });
+    System.import("scripts/app")
+        .then(null, console.error.bind(console));
     </script>
+
 
 </head>
 
 <body>
 
 
-    @html.block('content') 
-    @html.block('script')
+    @html.block('content') @html.block('script')
 
     <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-sanitize.min.js"></script>
@@ -52,7 +49,7 @@
     <script src="/scripts/app.js"></script>
 -->
 
-    <script data-main="scripts/myApp.client/app" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.js"></script>
+    <!--<script data-main="scripts/myApp.client/app" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.js"></script>-->
 
     <!--<script src="client/app.js"></script>
     <script src="client/app.thirdparty.js"></script>

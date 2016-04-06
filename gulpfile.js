@@ -84,11 +84,29 @@ gulp.task("copyAssetsToTest", () => {
 
     var m = merge();
 
-    var asset = gulp.src([
+    var srcAsset = gulp.src([
         "./src/**/*.html",
         "./src/**/*.css",
     ]).pipe(gulp.dest("./test"));
-    m.add(asset);
+    m.add(srcAsset);
+
+    var angular2 = gulp.src([
+        "./node_modules/angular2/**/*.js",
+        "./node_modules/angular2/**/*.js.map"
+    ]).pipe(gulp.dest("./test/client/scripts/node_modules/angular2/"));
+    m.add(angular2);
+
+    var system = gulp.src("./node_modules/systemjs/dist/**/*.*")
+        .pipe(gulp.dest("./test/client/scripts/node_modules/systemjs/dist/"));
+    m.add(system);
+    
+    var rxjs = gulp.src("./node_modules/rxjs/**/*.js")
+        .pipe(gulp.dest("./test/client/scripts/node_modules/rxjs/"));
+    m.add(rxjs);
+
+    var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
+        .pipe(gulp.dest("./test/client/scripts/node_modules/es6-shim/"));
+    m.add(es6Shim);
 
     return m;
 
@@ -146,8 +164,8 @@ gulp.task('ts_compile', () => {
         false
     );
     m.add(tsCoreTest);
-    
-    
+
+
     var tsClient = tsCompiler(
         [
             "./src/client/**/*.ts",

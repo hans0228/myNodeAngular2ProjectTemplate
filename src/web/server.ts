@@ -22,7 +22,7 @@ app.set("view engine", "html");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
-app.use(exp.static(path.join(__dirname, "wwwroot")));
+app.use(exp.static(path.join(__dirname, "../client")));
 
 //connect to db
 // var db = new dbM.core.common.DBContext();
