@@ -3,11 +3,13 @@
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
-        "noImplicitAny": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "removeComments": true,
         "preserveConstEnums": true,
         "declaration": false,
-        "listFiles": true
+        "listFiles": true,
+        "noImplicitAny": false
         //"noResolve": true
         //"mapRoot": "",
         //"outDir": "desc",

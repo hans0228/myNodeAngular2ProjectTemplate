@@ -6,14 +6,18 @@ import {Component} from 'angular2/core';
     template: `
         <h1>My First Angular 2 App</h1>
         <button (click)="showGreetLog('Bibby')">showGreet</button>
+        <br />
+        <p>{{Wording}}</p>
     `
 })
 export class HomeComponent {
 
+    public Wording: string = "";
+
     showGreetLog(name: string) {
 
         var wording = `Hello, ${name}`;
-        console.log(wording);
+        this.Wording = wording;
 
     }
 

@@ -1,11 +1,9 @@
 /// <reference path="../../typings/main.d.ts" />
 
-import * as chai from "chai";
+import {assert} from "chai";
 import {Foo} from "../core/foo";
 
-var assert = chai.assert;
-
-describe("foo", () => {
+describe("server side test => foo", () => {
 
     it("getName", () => {
 

@@ -99,7 +99,7 @@ gulp.task("copyAssetsToTest", () => {
     var system = gulp.src("./node_modules/systemjs/dist/**/*.*")
         .pipe(gulp.dest("./test/client/scripts/node_modules/systemjs/dist/"));
     m.add(system);
-    
+
     var rxjs = gulp.src("./node_modules/rxjs/**/*.js")
         .pipe(gulp.dest("./test/client/scripts/node_modules/rxjs/"));
     m.add(rxjs);
@@ -118,9 +118,9 @@ gulp.task("copyTestToDist", () => {
 
     var all = gulp.src([
         "./test/**/*",
-        "!./test/client.test{,/**/*}",
         "!./test/core.test{,/**/*}",
         "!./test/web.test{,/**/*}",
+        "!./test/client.test{,/**/*}",
     ]).pipe(gulp.dest("./dist"));
     m.add(all);
 
@@ -165,6 +165,35 @@ gulp.task('ts_compile', () => {
     );
     m.add(tsCoreTest);
 
+    var tsClient = tsCompiler(
+        [
+            "./src/client/**/*.ts",
+        ],
+        "tsconfig_node.json",
+        "src/client",
+        "./test/client",
+        false
+    );
+    m.add(tsClient);
+
+    var tsClientTest = tsCompiler(
+        [
+            "./src/client.test/**/*.ts",
+        ],
+        "tsconfig_node.json",
+        "src/client.test",
+        "./test/client.test",
+        false
+    );
+    m.add(tsClientTest);
+
+    return m;
+
+});
+
+gulp.task('ts_compileForAngular2', () => {
+
+    var m = merge();
 
     var tsClient = tsCompiler(
         [
@@ -172,7 +201,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_angular2.json",
         "src/client",
-        "./test/client",
+        "./dist/client",
         false
     );
     m.add(tsClient);
@@ -185,9 +214,9 @@ gulp.task("test_node", function() {
 
     return gulp.src(
         [
-            "./test/core.client/**/*.js",
-            "./test/core.test/**/*.js",
-            "./test/web.test/**/*.js"
+            "./test/core.test/**/*.spec.js",
+            "./test/web.test/**/*.spec.js",
+            "./test/client.test/**/*.spec.js",
         ], {
             read: false
         })
@@ -208,6 +237,9 @@ gulp.task("default", (cb) => {
             "copyTestToDist",
             "test_node",
         ],
+        [
+            "ts_compileForAngular2",
+        ],
         cb
     );
 });
@@ -219,7 +251,10 @@ gulp.task("server", () => {
     nodemon({
         script: serverfilePath,
         ext: "html js",
-        env: { 'NODE_ENV': 'development' }
+        env: {
+            "NODE_ENV": 'development',
+            "port": 1235
+        }
         //ignore: ["ignored.js"],
         //tasks: ["lint"] ,
     }).on("restart", () => {

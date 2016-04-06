@@ -47,7 +47,7 @@ init(app);
 var port: number = process.env.port || 1234;
 app.listen(port);
 
-console.log("server.ts, path", __dirname);
+console.log("server.ts, path => ", __dirname);
 console.log(`::${port} server start...`);
 
 
