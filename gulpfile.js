@@ -6,6 +6,7 @@ var runSequence = require("run-sequence");
 var mocha = require("gulp-mocha");
 
 var ts = require("gulp-typescript");
+var babel = require('gulp-babel');
 var sourcemaps = require("gulp-sourcemaps");
 var path = require('path');
 
@@ -73,6 +74,9 @@ gulp.task("clean", (cb) => {
         .then(() => {
             deletePathAsync("./dist");
         })
+        .then(()=>{
+            deletePathAsync("./_temp");            
+        })
         .catch(() => { })
         .then(() => {
             cb();
@@ -107,6 +111,10 @@ gulp.task("copyAssetsToTest", () => {
     var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
         .pipe(gulp.dest("./test/client/scripts/node_modules/es6-shim/"));
     m.add(es6Shim);
+
+    var babelPolyfill = gulp.src("./node_modules/babel-polyfill/dist/**/*.js")
+        .pipe(gulp.dest("./test/client/scripts/node_modules/babel-polyfill/dist/"));
+    m.add(babelPolyfill);
 
     return m;
 
@@ -201,12 +209,25 @@ gulp.task('ts_compileForAngular2', () => {
         ],
         "tsconfig_angular2.json",
         "src/client",
-        "./dist/client",
+        "./_temp/client",
         false
     );
     m.add(tsClient);
 
     return m;
+
+});
+
+gulp.task('ts_compileForAngular2Babel', () => {
+
+    var pathArr = [
+        "_temp/**/*.js"
+    ];
+    return gulp.src(pathArr)
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest("dist"));
 
 });
 
@@ -239,6 +260,9 @@ gulp.task("default", (cb) => {
         ],
         [
             "ts_compileForAngular2",
+        ],
+        [
+            "ts_compileForAngular2Babel",
         ],
         cb
     );

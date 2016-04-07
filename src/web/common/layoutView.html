@@ -15,6 +15,7 @@
     <script src="/scripts/node_modules/systemjs/dist/system.src.js"></script>
     <script src="/scripts/node_modules/rxjs/bundles/Rx.js"></script>
     <script src="/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="/scripts/node_modules/babel-polyfill/dist/polyfill.js"></script>
 
 
     <script>
@@ -23,7 +24,10 @@
           "scripts": {
             format: 'register',
             defaultExtension: 'js'
-          }
+          },
+        //   "map": {
+        //         "babel-polyfill": "/scripts/node_modules/babel-polyfill/dist/polyfill.js"
+        //   },
         }
     });
     System.import("scripts/app")

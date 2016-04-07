@@ -19,8 +19,8 @@ import {HomeService} from "./HomeService";
 })
 export class HomeComponent {
 
-    public Wording: string = "";
-    public AsyncWording: string = "";
+    public Wording = "";
+    public AsyncWording = "";
 
     constructor(private homeSer: HomeService) { }
 
@@ -33,7 +33,11 @@ export class HomeComponent {
     async showGreetLogAsync() {
 
         var wording = await this.homeSer.getNameAsync();
-        this.AsyncWording = await `Hello, ${wording} async`;;
+        this.AsyncWording = `Hello, ${wording} async`;
+
+        // console.log("async start...");
+        // var dt = new Date();
+        // this.AsyncWording = await `Hello, ${wording} ${dt} async`;
 
     }
 
