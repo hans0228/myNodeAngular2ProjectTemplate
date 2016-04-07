@@ -1,24 +1,41 @@
 /// <reference path="../../../../typings/browser.d.ts" />
 
-import {Component} from 'angular2/core';
+import {Component} from "angular2/core";
+import {HomeService} from "./HomeService";
+
 @Component({
     selector: 'my-app',
+    providers: [HomeService],
     template: `
         <h1>My First Angular 2 App</h1>
         <button (click)="showGreetLog('Bibby')">showGreet</button>
         <br />
-        <p>{{Wording}}</p>
+        <p>sync: {{Wording}}</p>
+        <hr />
+        <button (click)="showGreetLogAsync('Bibby')">showGreetAsync</button>
+        <br />
+        <p>async: {{AsyncWording}}</p>
     `
 })
 export class HomeComponent {
 
     public Wording: string = "";
+    public AsyncWording: string = "";
+
+    constructor(private homeSer: HomeService) { }
 
     showGreetLog(name: string) {
 
-        var wording = `Hello, ${name}`;
-        this.Wording = wording;
+        this.Wording = `Hello, ${name}`;
+
+    }
+
+    async showGreetLogAsync() {
+
+        var wording = await this.homeSer.getNameAsync();
+        this.AsyncWording = await `Hello, ${wording} async`;;
 
     }
 
 }
+

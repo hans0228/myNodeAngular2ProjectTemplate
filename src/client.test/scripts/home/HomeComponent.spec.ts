@@ -12,6 +12,7 @@ import {assert} from "chai";
 import * as sinon from "sinon";
 
 import {HomeComponent} from "../../../client/scripts/home/HomeComponent";
+import {HomeService} from "../../../client/scripts/home/HomeService";
 
 describe("client side test => HomeComponent", () => {
 
@@ -39,6 +40,7 @@ describe("client side test => HomeComponent", () => {
         var jj = Injector.resolveAndCreate([
 
             HomeComponent,
+            HomeService,
 
             // provide(Router, {
             //     useValue: new Router(new RouteRegistry(),)
@@ -93,6 +95,20 @@ describe("client side test => HomeComponent", () => {
         h.showGreetLog("Bibby");
 
         assert.equal(h.Wording, expected);
+
+    });
+
+    it("showGreetLogAsync", async (done: MochaDone) => {
+
+        var expectedAsync = "Hello, Bibby async";
+
+        var h: HomeComponent = injector.get(HomeComponent);
+        await h.showGreetLogAsync();
+
+        assert.equal(h.AsyncWording, expectedAsync);
+
+        done();
+
 
     });
 

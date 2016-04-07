@@ -1,6 +1,12 @@
 {
     "compilerOptions": {
         "target": "es6",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "typings"
+    ]
 }
