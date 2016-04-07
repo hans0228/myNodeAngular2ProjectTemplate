@@ -14,5 +14,16 @@ describe("server side test => foo", () => {
 
     });
 
+    it("getNameAsync", async () => {
+
+        var expected = "Bibby_Foo";
+        var f = new Foo();
+
+        var actual = await f.getNameAsync();
+
+        assert.equal(actual, expected);
+
+    });
+
 
 });

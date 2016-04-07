@@ -2,27 +2,29 @@
 
 import * as exp from "express";
 import {BaseController} from "../common/baseController";
+import {Foo} from "../../core/foo";
 
 export class HomeController extends BaseController {
 
     constructor(public app: exp.Application) {
         super(app);
 
-        this.init();
+        this.app.get("/", (req, res) => this.indexAsync(req, res));
     }
 
-    init(): void {
+    private async indexAsync(req: exp.Request, res: exp.Response) {
 
-        this.app.get("/", (req: exp.Request, res: exp.Response) => {
+        var f = new Foo();
+        var aynceWording = await f.getNameAsync();
 
-            var vm = {
-                title: "myApp Title",
-                content: "data from server content"
-            };
 
-            res.render("./home/homeView", vm);
+        var vm = {
+            title: "myApp Title",
+            content: "data from server content",
+            asyncContent: aynceWording
+        };
 
-        });
+        res.render("./home/homeView", vm);
 
     }
 
