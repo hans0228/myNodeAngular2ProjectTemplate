@@ -7,6 +7,7 @@ It's my project template for starting a new project.
 - clone it from github
 - npm install
 - typings install
+
 > **Note:** You have to install typings in your global environment
 
 # Architecture 
