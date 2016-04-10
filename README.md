@@ -2,7 +2,8 @@
 
 It's my project template for starting a new project.
 
-# Install
+Install
+---
 
 - clone it from github
 - npm install
@@ -10,5 +11,6 @@ It's my project template for starting a new project.
 
 > **Note:** You have to install typings in your global environment
 
-# Architecture 
+Architecture
+--- 
 (later...)
