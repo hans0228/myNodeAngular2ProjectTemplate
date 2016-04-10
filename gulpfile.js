@@ -46,18 +46,6 @@ var tsCompiler = function(
         .pipe(gulp.dest(targetPath));
 };
 
-var deletePathAsync = (str) => {
-    var p = new Promise((resolve, reject) => {
-        rimraf(str, (err) => {
-            if (err)
-                reject(err);
-            else
-                resolve();
-        });
-    });
-    return p;
-};
-
 var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
     return gulp.src(sourcePatten)
@@ -69,43 +57,46 @@ var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 gulp.task("clean", (cb) => {
 
-    deletePathAsync("./test")
-        .then(() => {
-            deletePathAsync("./dist");
-        })
-        .catch(() => { })
-        .then(() => {
-            cb();
+    rimraf("./_temp", () => {
+        rimraf("./test", () => {
+            rimraf("./dist", cb);
         });
+    });
 
 });
 
-gulp.task("copyAssetsToTest", () => {
+gulp.task("copyAssetsToDist", () => {
 
     var m = merge();
 
-    var srcAsset = gulp.src([
-        "./src/**/*.html",
-        "./src/**/*.css",
-    ]).pipe(gulp.dest("./test"));
-    m.add(srcAsset);
+    var clientAsset = gulp.src([
+        "./src/client/**/*.html",
+        "./src/client/**/*.css",
+    ]).pipe(gulp.dest("./dist/system/client/"));
+    m.add(clientAsset);
+
+    var webAsset = gulp.src([
+        "./src/web/**/*.html",
+        "./src/web/**/*.css",
+    ]).pipe(gulp.dest("./dist/node/web/"));
+    m.add(webAsset);
 
     var angular2 = gulp.src([
         "./node_modules/angular2/**/*.js",
         "./node_modules/angular2/**/*.js.map"
-    ]).pipe(gulp.dest("./test/client/scripts/node_modules/angular2/"));
+    ]).pipe(gulp.dest("./dist/system/client/scripts/node_modules/angular2/"));
     m.add(angular2);
 
     var system = gulp.src("./node_modules/systemjs/dist/**/*.*")
-        .pipe(gulp.dest("./test/client/scripts/node_modules/systemjs/dist/"));
+        .pipe(gulp.dest("./dist/system/client/scripts/node_modules/systemjs/dist/"));
     m.add(system);
 
     var rxjs = gulp.src("./node_modules/rxjs/**/*.js")
-        .pipe(gulp.dest("./test/client/scripts/node_modules/rxjs/"));
+        .pipe(gulp.dest("./dist/system/client/scripts/node_modules/rxjs/"));
     m.add(rxjs);
 
     var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
-        .pipe(gulp.dest("./test/client/scripts/node_modules/es6-shim/"));
+        .pipe(gulp.dest("./dist/system/client/scripts/node_modules/es6-shim/"));
     m.add(es6Shim);
 
     return m;
@@ -118,9 +109,9 @@ gulp.task("copyTestToDist", () => {
 
     var all = gulp.src([
         "./test/**/*",
-        "!./test/core.test{,/**/*}",
-        "!./test/web.test{,/**/*}",
-        "!./test/client.test{,/**/*}",
+        "!./test/node/core.test{,/**/*}",
+        "!./test/node/web.test{,/**/*}",
+        "!./test/system/client.test{,/**/*}",
     ]).pipe(gulp.dest("./dist"));
     m.add(all);
 
@@ -138,7 +129,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/web",
-        "./test/web",
+        "./test/node/web",
         false
     );
     m.add(tsWeb);
@@ -149,7 +140,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/core",
-        "./test/core",
+        "./test/node/core",
         false
     );
     m.add(tsCore);
@@ -160,7 +151,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/core.test",
-        "./test/core.test",
+        "./test/node/core.test",
         false
     );
     m.add(tsCoreTest);
@@ -171,7 +162,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/client",
-        "./test/client",
+        "./test/system/client",
         false
     );
     m.add(tsClient);
@@ -182,7 +173,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/client.test",
-        "./test/client.test",
+        "./test/system/client.test",
         false
     );
     m.add(tsClientTest);
@@ -201,7 +192,7 @@ gulp.task('ts_compileForAngular2', () => {
         ],
         "tsconfig_angular2.json",
         "src/client",
-        "./dist/client",
+        "./dist/system/client",
         false
     );
     m.add(tsClient);
@@ -214,9 +205,7 @@ gulp.task("test_node", function() {
 
     return gulp.src(
         [
-            "./test/core.test/**/*.spec.js",
-            "./test/web.test/**/*.spec.js",
-            "./test/client.test/**/*.spec.js",
+            "./test/**/*.spec.js"
         ], {
             read: false
         })
@@ -231,13 +220,13 @@ gulp.task("default", (cb) => {
         "clean",
         [
             "ts_compile",
-            "copyAssetsToTest",
         ],
         [
-            "copyTestToDist",
             "test_node",
         ],
         [
+            "copyAssetsToDist",
+            "copyTestToDist",
             "ts_compileForAngular2",
         ],
         cb
@@ -246,14 +235,14 @@ gulp.task("default", (cb) => {
 
 gulp.task("server", () => {
 
-    var serverfilePath = "./dist/web/server.js";
+    var serverfilePath = "./dist/node/web/server.js";
 
     nodemon({
         script: serverfilePath,
         ext: "html js",
         env: {
             "NODE_ENV": 'development',
-            "port": 1235
+            "port": 1236
         }
         //ignore: ["ignored.js"],
         //tasks: ["lint"] ,

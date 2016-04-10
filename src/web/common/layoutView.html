@@ -8,25 +8,27 @@
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
-    <script src="/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="/scripts/node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="/scripts/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-    <script src="/scripts/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="/scripts/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/scripts/node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="/client/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="/client/scripts/node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="/client/scripts/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="/client/scripts/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="/client/scripts/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/client/scripts/node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="/client/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
 
 
     <script>
-        System.config({
-        packages: {      
-          "scripts": {
-            format: 'register',
-            defaultExtension: 'js'
-          }
+    System.config({
+        packages: {  
+            "client":{    
+                "scripts": {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
         }
     });
-    System.import("scripts/app")
+    System.import("client/scripts/app")
         .then(null, console.error.bind(console));
     </script>
 
