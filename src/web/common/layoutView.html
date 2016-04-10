@@ -8,27 +8,34 @@
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
-    <script src="/client/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="/client/scripts/node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="/client/scripts/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-    <script src="/client/scripts/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="/client/scripts/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/client/scripts/node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="/client/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="/scripts/node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="/scripts/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="/scripts/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="/scripts/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/scripts/node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
+
+
 
 
     <script>
     System.config({
-        packages: {  
-            "client":{    
-                "scripts": {
-                    format: 'register',
-                    defaultExtension: 'js'
+        // map: {
+        //     "reflect-metadata":"/scripts/node_modules/reflect-metadata/Reflect.js"
+        // },        
+        packages:{ 
+            "scripts":{
+                "client":{
+                    "scripts":{
+                        format: "register",
+                        defaultExtension: "js"
+                    },     
                 }
-            }
+            },
         }
     });
-    System.import("client/scripts/app")
+    System.import("scripts/client/scripts/app")
         .then(null, console.error.bind(console));
     </script>
 
@@ -37,32 +44,7 @@
 
 <body>
 
-
     @html.block('content') @html.block('script')
-
-    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular-sanitize.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>-->
-
-
-    <!--
-    <script src="/scripts/app.js"></script>
--->
-
-    <!--<script data-main="scripts/myApp.client/app" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.js"></script>-->
-
-    <!--<script src="client/app.js"></script>
-    <script src="client/app.thirdparty.js"></script>
-    <script src="client/app.config.js"></script>
-    <script src="client/app.run.js"></script>
-    <script src="client/app.value.js"></script>
-    <script src="client/services/_module.js"></script>
-    <script src="client/services/HelloWorldService.js"></script>
-    <script src="client/HelloWorld/_module.js"></script>
-    <script src="client/HelloWorld/HelloWorldProvider.js"></script>
-    <script src="client/HelloWorld/controller.js"></script>-->
 
 </body>
 

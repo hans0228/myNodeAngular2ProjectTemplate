@@ -69,34 +69,34 @@ gulp.task("copyAssetsToDist", () => {
 
     var m = merge();
 
-    var clientAsset = gulp.src([
-        "./src/client/**/*.html",
-        "./src/client/**/*.css",
-    ]).pipe(gulp.dest("./dist/system/client/"));
-    m.add(clientAsset);
-
     var webAsset = gulp.src([
         "./src/web/**/*.html",
         "./src/web/**/*.css",
     ]).pipe(gulp.dest("./dist/node/web/"));
     m.add(webAsset);
 
+    var clientAsset = gulp.src([
+        "./src/client/**/*.html",
+        "./src/client/**/*.css",
+    ]).pipe(gulp.dest("./dist/system/script/client/"));
+    m.add(clientAsset);
+
     var angular2 = gulp.src([
         "./node_modules/angular2/**/*.js",
         "./node_modules/angular2/**/*.js.map"
-    ]).pipe(gulp.dest("./dist/system/client/scripts/node_modules/angular2/"));
+    ]).pipe(gulp.dest("./dist/system/scripts/node_modules/angular2/"));
     m.add(angular2);
 
     var system = gulp.src("./node_modules/systemjs/dist/**/*.*")
-        .pipe(gulp.dest("./dist/system/client/scripts/node_modules/systemjs/dist/"));
+        .pipe(gulp.dest("./dist/system/scripts/node_modules/systemjs/dist/"));
     m.add(system);
 
     var rxjs = gulp.src("./node_modules/rxjs/**/*.js")
-        .pipe(gulp.dest("./dist/system/client/scripts/node_modules/rxjs/"));
+        .pipe(gulp.dest("./dist/system/scripts/node_modules/rxjs/"));
     m.add(rxjs);
 
     var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
-        .pipe(gulp.dest("./dist/system/client/scripts/node_modules/es6-shim/"));
+        .pipe(gulp.dest("./dist/system/scripts/node_modules/es6-shim/"));
     m.add(es6Shim);
 
     return m;
@@ -111,7 +111,7 @@ gulp.task("copyTestToDist", () => {
         "./test/**/*",
         "!./test/node/core.test{,/**/*}",
         "!./test/node/web.test{,/**/*}",
-        "!./test/system/client.test{,/**/*}",
+        "!./test/system/scripts/client.test{,/**/*}",
     ]).pipe(gulp.dest("./dist"));
     m.add(all);
 
@@ -162,7 +162,7 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/client",
-        "./test/system/client",
+        "./test/system/scripts/client",
         false
     );
     m.add(tsClient);
@@ -173,10 +173,21 @@ gulp.task('ts_compile', () => {
         ],
         "tsconfig_node.json",
         "src/client.test",
-        "./test/system/client.test",
+        "./test/system/scripts/client.test",
         false
     );
     m.add(tsClientTest);
+
+    var tsClientCore = tsCompiler(
+        [
+            "./src/core/**/*.ts",
+        ],
+        "tsconfig_node.json",
+        "src/core",
+        "./test/system/scripts/core",
+        false
+    );
+    m.add(tsClientCore);
 
     return m;
 
@@ -186,16 +197,27 @@ gulp.task('ts_compileForAngular2', () => {
 
     var m = merge();
 
-    var tsClient = tsCompiler(
+    var tsClientAngular2 = tsCompiler(
         [
             "./src/client/**/*.ts",
         ],
         "tsconfig_angular2.json",
         "src/client",
-        "./dist/system/client",
+        "./dist/system/scripts/client",
         false
     );
-    m.add(tsClient);
+    m.add(tsClientAngular2);
+
+    var tsCoreAngular = tsCompiler(
+        [
+            "./src/core/**/*.ts",
+        ],
+        "tsconfig_angular2.json",
+        "src/client",
+        "./dist/system/scripts/core",
+        false
+    );
+    m.add(tsCoreAngular);
 
     return m;
 

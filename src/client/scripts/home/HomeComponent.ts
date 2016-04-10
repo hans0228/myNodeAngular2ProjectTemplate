@@ -2,6 +2,7 @@
 
 import {Component} from "angular2/core";
 import {HomeService} from "./HomeService";
+import {AppHelper} from "../../../core/appHelper";
 
 @Component({
     selector: 'my-app',
@@ -27,6 +28,17 @@ export class HomeComponent {
     showGreetLog(name: string) {
 
         this.Wording = `Hello, ${name}`;
+
+
+        //console.log(Person);
+
+        // var p = new Person();
+        // p.Name = "Bibby";
+        // p.Age = 18;
+        // p.Birthday = new Date();
+        // console.log(p);
+        //var helper = new AppHelper();
+        AppHelper.consoleWrite("date:", new Date());
 
     }
 

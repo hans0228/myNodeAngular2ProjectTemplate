@@ -1,4 +1,5 @@
 /// <reference path="../../typings/main.d.ts" />
+import "reflect-metadata";
 
 import * as exp from "express";
 import * as bodyParser from "body-parser";
