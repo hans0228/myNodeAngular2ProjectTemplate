@@ -5,9 +5,10 @@ It's my project template for starting a new project.
 Install
 ---
 
-- clone it from github
-- npm install
-- typings install
+- clone this project from github
+- \> cd code/
+- \> npm install
+- \> typings install
 
 > **Note:** You have to install typings in your global environment
 
