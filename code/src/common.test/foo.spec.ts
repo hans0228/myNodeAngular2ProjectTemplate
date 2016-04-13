@@ -1,7 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import {assert} from "chai";
-import {Foo} from "../core/foo";
+import {Foo} from "../common/foo";
 
 describe("server side test => foo", () => {
 

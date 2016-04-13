@@ -2,7 +2,7 @@
 
 import {Component} from "angular2/core";
 import {HomeService} from "./HomeService";
-import {AppHelper} from "../../../core/appHelper";
+import {AppHelper} from "../../../common/appHelper";
 
 @Component({
     selector: 'my-app',

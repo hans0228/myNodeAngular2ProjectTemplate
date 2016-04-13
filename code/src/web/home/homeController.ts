@@ -2,8 +2,8 @@
 
 import * as exp from "express";
 import {BaseController} from "../common/baseController";
-import {Foo} from "../../core/foo";
-import {AppHelper} from "../../core/AppHelper";
+import {Foo} from "../../common/foo";
+import {AppHelper} from "../../common/AppHelper";
 
 export class HomeController extends BaseController {
 

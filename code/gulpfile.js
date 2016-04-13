@@ -109,7 +109,7 @@ gulp.task("copyTestToDist", () => {
 
     var all = gulp.src([
         "./test/**/*",
-        "!./test/node/core.test{,/**/*}",
+        "!./test/node/common.test{,/**/*}",
         "!./test/node/web.test{,/**/*}",
         "!./test/system/scripts/client.test{,/**/*}",
     ]).pipe(gulp.dest("./dist"));
@@ -134,27 +134,27 @@ gulp.task('ts_compile', () => {
     );
     m.add(tsWeb);
 
-    var tsCore = tsCompiler(
+    var tscommon = tsCompiler(
         [
-            "./src/core/**/*.ts",
+            "./src/common/**/*.ts",
         ],
         "tsconfig_node.json",
-        "src/core",
-        "./test/node/core",
+        "src/common",
+        "./test/node/common",
         false
     );
-    m.add(tsCore);
+    m.add(tscommon);
 
-    var tsCoreTest = tsCompiler(
+    var tscommonTest = tsCompiler(
         [
-            "./src/core.test/**/*.ts",
+            "./src/common.test/**/*.ts",
         ],
         "tsconfig_node.json",
-        "src/core.test",
-        "./test/node/core.test",
+        "src/common.test",
+        "./test/node/common.test",
         false
     );
-    m.add(tsCoreTest);
+    m.add(tscommonTest);
 
     var tsClient = tsCompiler(
         [
@@ -178,16 +178,16 @@ gulp.task('ts_compile', () => {
     );
     m.add(tsClientTest);
 
-    var tsClientCore = tsCompiler(
+    var tsClientcommon = tsCompiler(
         [
-            "./src/core/**/*.ts",
+            "./src/common/**/*.ts",
         ],
         "tsconfig_node.json",
-        "src/core",
-        "./test/system/scripts/core",
+        "src/common",
+        "./test/system/scripts/common",
         false
     );
-    m.add(tsClientCore);
+    m.add(tsClientcommon);
 
     return m;
 
@@ -208,16 +208,16 @@ gulp.task('ts_compileForAngular2', () => {
     );
     m.add(tsClientAngular2);
 
-    var tsCoreAngular = tsCompiler(
+    var tscommonAngular = tsCompiler(
         [
-            "./src/core/**/*.ts",
+            "./src/common/**/*.ts",
         ],
         "tsconfig_angular2.json",
         "src/client",
-        "./dist/system/scripts/core",
+        "./dist/system/scripts/common",
         false
     );
-    m.add(tsCoreAngular);
+    m.add(tscommonAngular);
 
     return m;
 
