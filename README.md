@@ -8,7 +8,6 @@ Install
 - clone this project from github
 - \> cd code/
 - \> npm install
-- \> typings install
 
 > **Note:** You have to install typings in your global environment
 
