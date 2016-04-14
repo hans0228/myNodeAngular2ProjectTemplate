@@ -127,7 +127,7 @@ gulp.task('ts_compile', () => {
         [
             "./src/web/**/*.ts",
         ],
-        "tsconfig_node.json",
+        "tsconfig_es6_commonjs.json",
         "src/web",
         "./test/node/web",
         false
@@ -138,7 +138,7 @@ gulp.task('ts_compile', () => {
         [
             "./src/common/**/*.ts",
         ],
-        "tsconfig_node.json",
+        "tsconfig_es6_commonjs.json",
         "src/common",
         "./test/node/common",
         false
@@ -149,7 +149,7 @@ gulp.task('ts_compile', () => {
         [
             "./src/common.test/**/*.ts",
         ],
-        "tsconfig_node.json",
+        "tsconfig_es6_commonjs.json",
         "src/common.test",
         "./test/node/common.test",
         false
@@ -160,7 +160,7 @@ gulp.task('ts_compile', () => {
         [
             "./src/client/**/*.ts",
         ],
-        "tsconfig_node.json",
+        "tsconfig_es6_commonjs.json",
         "src/client",
         "./test/system/scripts/client",
         false
@@ -171,7 +171,7 @@ gulp.task('ts_compile', () => {
         [
             "./src/client.test/**/*.ts",
         ],
-        "tsconfig_node.json",
+        "tsconfig_es6_commonjs.json",
         "src/client.test",
         "./test/system/scripts/client.test",
         false
@@ -182,7 +182,7 @@ gulp.task('ts_compile', () => {
         [
             "./src/common/**/*.ts",
         ],
-        "tsconfig_node.json",
+        "tsconfig_es6_commonjs.json",
         "src/common",
         "./test/system/scripts/common",
         false
@@ -201,7 +201,7 @@ gulp.task('ts_compileForAngular2', () => {
         [
             "./src/client/**/*.ts",
         ],
-        "tsconfig_angular2.json",
+        "tsconfig_es6_system.json",
         "src/client",
         "./dist/system/scripts/client",
         false
@@ -212,7 +212,7 @@ gulp.task('ts_compileForAngular2', () => {
         [
             "./src/common/**/*.ts",
         ],
-        "tsconfig_angular2.json",
+        "tsconfig_es6_system.json",
         "src/client",
         "./dist/system/scripts/common",
         false
