@@ -21,7 +21,7 @@ export class Foo {
 
     }
 
-    getGetInt() {
+    getInt() {
 
         var b = new Bar();
         return b.getNumber();

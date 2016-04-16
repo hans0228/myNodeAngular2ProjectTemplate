@@ -45,7 +45,7 @@ describe("server side test => foo", () => {
         });
 
         var v: Foo = new fooProxy.Foo();
-        var actual = v.getGetInt();
+        var actual = v.getInt();
         assert.equal(actual, excepted);
 
     });
