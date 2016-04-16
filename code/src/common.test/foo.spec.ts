@@ -30,16 +30,20 @@ describe("server side test => foo", () => {
 
     });
 
-    it("getGetInt", () => {
+    it("getInt", () => {
 
         var excepted = 456;
+        var isGetNumberBeCalledCount = 0;
         var fooProxy = proxyquire("../common/foo", {
             "./bar": {
                 Bar:
-                class _x {
+                class BarSub {
+
                     getNumber() {
+                        isGetNumberBeCalledCount++;
                         return 456;
                     }
+
                 }
             }
         });
@@ -47,6 +51,7 @@ describe("server side test => foo", () => {
         var v: Foo = new fooProxy.Foo();
         var actual = v.getInt();
         assert.equal(actual, excepted);
+        assert.equal(isGetNumberBeCalledCount, 1);
 
     });
 
