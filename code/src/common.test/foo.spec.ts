@@ -2,6 +2,9 @@
 
 import {assert} from "chai";
 import {Foo} from "../common/foo";
+import {Bar} from "../common/bar";
+import * as proxyquire from "proxyquire";
+
 
 describe("server side test => foo", () => {
 
@@ -10,7 +13,9 @@ describe("server side test => foo", () => {
         var expected = "Bibby_Foo";
         var f = new Foo();
 
-        assert.equal(f.getName(), expected);
+        var actual = f.getName();
+
+        assert.equal(actual, expected);
 
     });
 
@@ -22,6 +27,26 @@ describe("server side test => foo", () => {
         var actual = await f.getNameAsync();
 
         assert.equal(actual, expected);
+
+    });
+
+    it("getGetInt", () => {
+
+        var excepted = 456;
+        var fooProxy = proxyquire("../common/foo", {
+            "./bar": {
+                Bar:
+                class _x {
+                    getNumber() {
+                        return 456;
+                    }
+                }
+            }
+        });
+
+        var v: Foo = new fooProxy.Foo();
+        var actual = v.getGetInt();
+        assert.equal(actual, excepted);
 
     });
 

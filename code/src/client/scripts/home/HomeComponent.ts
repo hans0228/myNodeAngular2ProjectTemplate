@@ -29,7 +29,7 @@ export class HomeComponent {
 
         this.Wording = `Hello, ${name}`;
 
-        AppHelper.consoleWrite("date:", new Date());
+        //AppHelper.consoleWrite("date:", new Date());
 
     }
 

@@ -1,43 +1,44 @@
 {
-    "name": "code",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "directories": {
-        "test": "test"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "typings install"
-    },
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "chai": "^3.5.0",
-        "gulp": "^3.9.1",
-        "gulp-mocha": "^2.2.0",
-        "gulp-nodemon": "^2.0.6",
-        "gulp-shell": "^0.5.2",
-        "gulp-sourcemaps": "^1.6.0",
-        "gulp-typescript": "^2.12.1",
-        "merge-stream": "^1.0.0",
-        "mocha": "^2.4.5",
-        "rimraf": "^2.5.2",
-        "run-sequence": "^1.1.5",
-        "sinon": "^1.17.3",
-        "sinon-chai": "^2.8.0",
-        "typings": "^0.7.12"
-    },
-    "dependencies": {
-        "body-parser": "^1.15.0",
-        "es6-promise": "^3.1.2",
-        "express": "^4.13.4",
-        "vash": "^0.11.2",
-        "angular2": "2.0.0-beta.13",
-        "systemjs": "0.19.25",
-        "es6-shim": "^0.35.0",
-        "reflect-metadata": "0.1.2",
-        "rxjs": "5.0.0-beta.2",
-        "zone.js": "0.6.6"
-    }
+  "name": "code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "typings install"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-shell": "^0.5.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.12.1",
+    "merge-stream": "^1.0.0",
+    "mocha": "^2.4.5",
+    "proxyquire": "^1.7.4",
+    "rimraf": "^2.5.2",
+    "run-sequence": "^1.1.5",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0",
+    "typings": "^0.7.12"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "es6-promise": "^3.1.2",
+    "express": "^4.13.4",
+    "vash": "^0.11.2",
+    "angular2": "2.0.0-beta.13",
+    "systemjs": "0.19.25",
+    "es6-shim": "^0.35.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.6.6"
+  }
 }

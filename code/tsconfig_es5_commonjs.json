@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "declaration": false,
+        "listFiles": true,
+        "noImplicitAny": false,
+        "isolatedModules": true
+        //"noResolve": true
+        //"mapRoot": "",
+        //"outDir": "desc",
+        //"sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "typings"
+    ]
+}

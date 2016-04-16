@@ -119,7 +119,7 @@ gulp.task("copyTestToDist", () => {
 
 });
 
-gulp.task('ts_compile', () => {
+gulp.task('ts_compile_es6_test', () => {
 
     var m = merge();
 
@@ -134,7 +134,7 @@ gulp.task('ts_compile', () => {
     );
     m.add(tsWeb);
 
-    var tscommon = tsCompiler(
+    var tsCommon = tsCompiler(
         [
             "./src/common/**/*.ts",
         ],
@@ -143,9 +143,9 @@ gulp.task('ts_compile', () => {
         "./test/node/common",
         false
     );
-    m.add(tscommon);
+    m.add(tsCommon);
 
-    var tscommonTest = tsCompiler(
+    var tsCommonTest = tsCompiler(
         [
             "./src/common.test/**/*.ts",
         ],
@@ -154,7 +154,7 @@ gulp.task('ts_compile', () => {
         "./test/node/common.test",
         false
     );
-    m.add(tscommonTest);
+    m.add(tsCommonTest);
 
     var tsClient = tsCompiler(
         [
@@ -178,7 +178,7 @@ gulp.task('ts_compile', () => {
     );
     m.add(tsClientTest);
 
-    var tsClientcommon = tsCompiler(
+    var tsClientCommon = tsCompiler(
         [
             "./src/common/**/*.ts",
         ],
@@ -187,39 +187,63 @@ gulp.task('ts_compile', () => {
         "./test/system/scripts/common",
         false
     );
-    m.add(tsClientcommon);
+    m.add(tsClientCommon);
 
     return m;
 
 });
 
-gulp.task('ts_compileForAngular2', () => {
+gulp.task('ts_compile_es6_dist', () => {
 
     var m = merge();
 
-    var tsClientAngular2 = tsCompiler(
+    var tsWeb = tsCompiler(
+        [
+            "./src/web/**/*.ts",
+        ],
+        "tsconfig_es6_commonjs.json",
+        "src/web",
+        "./dist/node/web",
+        false
+    );
+    m.add(tsWeb);
+
+    var tsCommon = tsCompiler(
+        [
+            "./src/common/**/*.ts",
+        ],
+        "tsconfig_es6_commonjs.json",
+        "src/common",
+        "./dist/node/common",
+        false
+    );
+    m.add(tsCommon);
+
+    var tsClient = tsCompiler(
         [
             "./src/client/**/*.ts",
         ],
-        "tsconfig_es6_system.json",
+        "tsconfig_es6_systemjs.json",
         "src/client",
         "./dist/system/scripts/client",
         false
     );
-    m.add(tsClientAngular2);
+    m.add(tsClient);
 
-    var tscommonAngular = tsCompiler(
+    var tsClientCommon = tsCompiler(
         [
             "./src/common/**/*.ts",
         ],
-        "tsconfig_es6_system.json",
-        "src/client",
+        "tsconfig_es6_systemjs.json",
+        "src/common",
         "./dist/system/scripts/common",
         false
     );
-    m.add(tscommonAngular);
+    m.add(tsClientCommon);
 
     return m;
+
+    
 
 });
 
@@ -241,15 +265,12 @@ gulp.task("default", (cb) => {
     runSequence(
         "clean",
         [
-            "ts_compile",
+            "ts_compile_es6_test",
+            "ts_compile_es6_dist",
+            "copyAssetsToDist",
         ],
         [
             "test_node",
-        ],
-        [
-            "copyAssetsToDist",
-            "copyTestToDist",
-            "ts_compileForAngular2",
         ],
         cb
     );

@@ -1,4 +1,4 @@
-
+import {Bar} from "./bar";
 
 export class Foo {
 
@@ -18,6 +18,13 @@ export class Foo {
 
         });
         return p;
+
+    }
+
+    getGetInt() {
+
+        var b = new Bar();
+        return b.getNumber();
 
     }
 
