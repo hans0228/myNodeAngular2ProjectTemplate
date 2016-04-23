@@ -1,4 +1,4 @@
-/// <reference path="../../typings/main.d.ts" />
+/// <reference path="../../../typings/main.d.ts" />
 import "reflect-metadata";
 
 import * as exp from "express";
@@ -23,7 +23,7 @@ app.set("view engine", "html");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
-app.use(exp.static(path.join(__dirname, "../../system")));
+app.use(exp.static(path.join(__dirname, "../../systemjs")));
 
 //connect to db
 // var db = new dbM.core.common.DBContext();

@@ -20,22 +20,24 @@
 
 
     <script>
-    System.config({
+        System.config({
         // map: {
         //     "reflect-metadata":"/scripts/node_modules/reflect-metadata/Reflect.js"
         // },        
         packages:{ 
             "scripts":{
-                "client":{
-                    "scripts":{
-                        format: "register",
-                        defaultExtension: "js"
-                    },     
+                "systemjs":{
+                    "client":{
+                        "scripts":{
+                            format: "register",
+                            defaultExtension: "js"
+                        }     
+                    }
                 }
-            },
+            }
         }
     });
-    System.import("scripts/client/scripts/app")
+    System.import("scripts/systemjs/client/scripts/app")
         .then(null, console.error.bind(console));
     </script>
 

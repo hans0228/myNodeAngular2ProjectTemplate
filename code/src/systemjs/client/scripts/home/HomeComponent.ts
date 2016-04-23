@@ -1,8 +1,8 @@
-/// <reference path="../../../../typings/browser.d.ts" />
+/// <reference path="../../../../../typings/browser.d.ts" />
 
 import {Component} from "angular2/core";
 import {HomeService} from "./HomeService";
-import {AppHelper} from "../../../common/appHelper";
+import {AppHelper} from "../../../../common/appHelper";
 
 @Component({
     selector: 'my-app',

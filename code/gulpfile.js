@@ -20,7 +20,7 @@ var nodemon = require("gulp-nodemon");
 
 //=================================== Method ===================================
 
-var tsCompiler = function(
+var tsCompiler = function (
     pathArr,
     tsconfigPath,
     sroucemapPostfix,
@@ -34,7 +34,7 @@ var tsCompiler = function(
         //.pipe(uglify())
         .pipe(sourcemaps.write("./", {
             includeContent: false,
-            sourceRoot: function(file) {
+            sourceRoot: function (file) {
                 var arr = file.relative.split("/");
                 var prefix = "";
                 for (var i = 0; i < arr.length; i++) {
@@ -57,10 +57,8 @@ var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 gulp.task("clean", (cb) => {
 
-    rimraf("./_temp", () => {
-        rimraf("./test", () => {
-            rimraf("./dist", cb);
-        });
+    rimraf("./test", () => {
+        rimraf("./dist", cb);
     });
 
 });
@@ -70,54 +68,54 @@ gulp.task("copyAssetsToDist", () => {
     var m = merge();
 
     var webAsset = gulp.src([
-        "./src/web/**/*.html",
-        "./src/web/**/*.css",
-    ]).pipe(gulp.dest("./dist/node/web/"));
+        "./src/nodejs/web/**/*.html",
+        "./src/nodejs/web/**/*.css",
+    ]).pipe(gulp.dest("./dist/nodejs/web/"));
     m.add(webAsset);
 
     var clientAsset = gulp.src([
-        "./src/client/**/*.html",
-        "./src/client/**/*.css",
-    ]).pipe(gulp.dest("./dist/system/script/client/"));
+        "./src/systemjs/client/**/*.html",
+        "./src/systemjs/client/**/*.css",
+    ]).pipe(gulp.dest("./dist/systemjs/script/client/"));
     m.add(clientAsset);
 
     var angular2 = gulp.src([
         "./node_modules/angular2/**/*.js",
         "./node_modules/angular2/**/*.js.map"
-    ]).pipe(gulp.dest("./dist/system/scripts/node_modules/angular2/"));
+    ]).pipe(gulp.dest("./dist/systemjs/scripts/node_modules/angular2/"));
     m.add(angular2);
 
     var system = gulp.src("./node_modules/systemjs/dist/**/*.*")
-        .pipe(gulp.dest("./dist/system/scripts/node_modules/systemjs/dist/"));
+        .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/systemjs/dist/"));
     m.add(system);
 
     var rxjs = gulp.src("./node_modules/rxjs/**/*.js")
-        .pipe(gulp.dest("./dist/system/scripts/node_modules/rxjs/"));
+        .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/rxjs/"));
     m.add(rxjs);
 
     var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
-        .pipe(gulp.dest("./dist/system/scripts/node_modules/es6-shim/"));
+        .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/es6-shim/"));
     m.add(es6Shim);
 
     return m;
 
 });
 
-gulp.task("copyTestToDist", () => {
+// gulp.task("copyTestToDist", () => {
 
-    var m = merge();
+//     var m = merge();
 
-    var all = gulp.src([
-        "./test/**/*",
-        "!./test/node/common.test{,/**/*}",
-        "!./test/node/web.test{,/**/*}",
-        "!./test/system/scripts/client.test{,/**/*}",
-    ]).pipe(gulp.dest("./dist"));
-    m.add(all);
+//     var all = gulp.src([
+//         "./test/**/*",
+//         "!./test/node/common.test{,/**/*}",
+//         "!./test/node/web.test{,/**/*}",
+//         "!./test/system/scripts/client.test{,/**/*}",
+//     ]).pipe(gulp.dest("./dist"));
+//     m.add(all);
 
-    return m;
+//     return m;
 
-});
+// });
 
 gulp.task('ts_compile_es6_test', () => {
 
@@ -125,11 +123,11 @@ gulp.task('ts_compile_es6_test', () => {
 
     var tsWeb = tsCompiler(
         [
-            "./src/web/**/*.ts",
+            "./src/nodejs/web/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/web",
-        "./test/node/web",
+        "src/nodejs/web",
+        "./test/nodejs/web",
         false
     );
     m.add(tsWeb);
@@ -140,7 +138,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/common",
-        "./test/node/common",
+        "./test/common",
         false
     );
     m.add(tsCommon);
@@ -151,29 +149,29 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/common.test",
-        "./test/node/common.test",
+        "./test/common.test",
         false
     );
     m.add(tsCommonTest);
 
     var tsClient = tsCompiler(
         [
-            "./src/client/**/*.ts",
+            "./src/systemjs/client/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/client",
-        "./test/system/scripts/client",
+        "src/systemjs/client",
+        "./test/systemjs/scripts/systemjs/client",
         false
     );
     m.add(tsClient);
 
     var tsClientTest = tsCompiler(
         [
-            "./src/client.test/**/*.ts",
+            "./src/systemjs/client.test/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/client.test",
-        "./test/system/scripts/client.test",
+        "src/systemjs/client.test",
+        "./test/systemjs/scripts/systemjs/client.test",
         false
     );
     m.add(tsClientTest);
@@ -184,7 +182,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/common",
-        "./test/system/scripts/common",
+        "./test/systemjs/scripts/common",
         false
     );
     m.add(tsClientCommon);
@@ -199,11 +197,11 @@ gulp.task('ts_compile_es6_dist', () => {
 
     var tsWeb = tsCompiler(
         [
-            "./src/web/**/*.ts",
+            "./src/nodejs/web/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/web",
-        "./dist/node/web",
+        "src/nodejs/web",
+        "./dist/nodejs/web",
         false
     );
     m.add(tsWeb);
@@ -214,18 +212,18 @@ gulp.task('ts_compile_es6_dist', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/common",
-        "./dist/node/common",
+        "./dist/common",
         false
     );
     m.add(tsCommon);
 
     var tsClient = tsCompiler(
         [
-            "./src/client/**/*.ts",
+            "./src/systemjs/client/**/*.ts",
         ],
         "tsconfig_es6_systemjs.json",
-        "src/client",
-        "./dist/system/scripts/client",
+        "src/systemjs/client",
+        "./dist/systemjs/scripts/systemjs/client",
         false
     );
     m.add(tsClient);
@@ -236,18 +234,16 @@ gulp.task('ts_compile_es6_dist', () => {
         ],
         "tsconfig_es6_systemjs.json",
         "src/common",
-        "./dist/system/scripts/common",
+        "./dist/systemjs/scripts/common",
         false
     );
     m.add(tsClientCommon);
 
     return m;
 
-    
-
 });
 
-gulp.task("test_node", function() {
+gulp.task("test_node", function () {
 
     return gulp.src(
         [
@@ -278,7 +274,7 @@ gulp.task("default", (cb) => {
 
 gulp.task("server", () => {
 
-    var serverfilePath = "./dist/node/web/server.js";
+    var serverfilePath = "./dist/nodejs/web/server.js";
 
     nodemon({
         script: serverfilePath,

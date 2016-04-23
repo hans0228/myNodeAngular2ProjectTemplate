@@ -1,9 +1,9 @@
-/// <reference path="../../../typings/main.d.ts" />
+/// <reference path="../../../../typings/main.d.ts" />
 
 import * as exp from "express";
 import {BaseController} from "../common/baseController";
-import {Foo} from "../../common/foo";
-import {AppHelper} from "../../common/AppHelper";
+import {Foo} from "../../../common/foo";
+import {AppHelper} from "../../../common/AppHelper";
 
 export class HomeController extends BaseController {
 
