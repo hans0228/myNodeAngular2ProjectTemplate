@@ -24,8 +24,6 @@ export class HomeController extends BaseController {
             asyncContent: aynceWording
         };
 
-        AppHelper.consoleWrite("home page log", new Date());
-
         res.render("./home/homeView", vm);
 
     }

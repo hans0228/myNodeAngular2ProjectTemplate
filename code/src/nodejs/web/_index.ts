@@ -3,9 +3,8 @@
 import * as exp from "express";
 import {HomeController} from "./home/homeController";
 
-export const init = (app: exp.Application) => {
+export const initRouter = (app: exp.Application) => {
     
     new HomeController(app);
-
 
 };
