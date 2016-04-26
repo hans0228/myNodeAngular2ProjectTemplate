@@ -8,7 +8,7 @@ import * as path from "path";
 
 class Configuration {
 
-	static connectionString = "mongodb://xxxxxxx";
+	static connectionString = "mongodb://xxxx";
 
 }
 

@@ -32,8 +32,7 @@ var init = async () => {
 
     //connect to db
     // var mydb = new DbContext(Configuration.connectionString);
-    // var msg = await mydb.startToConnectAsync();
-    // AppHelper.consoleWrite("db status", msg);
+    // mydb.startToConnectAsync();
 
     //router
     app.all('*', (req, res, next) => {

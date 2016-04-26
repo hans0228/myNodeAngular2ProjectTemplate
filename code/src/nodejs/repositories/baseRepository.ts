@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import {AppHelper} from "../../common/appHelper";
 
 export abstract class BaseRepository<T extends mongoose.Document> {
 
@@ -17,7 +18,7 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 	getAll() {
 
 		var documentName = this.getDocumentName();
-		var schema = this.getSchema();
+		var schema = this.getSchema()	;
 		try {
 			return mongoose.model<T>(documentName, schema);
 		} catch (ex) {
@@ -38,7 +39,7 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 		this.updateArr.push(entity);
 	}
 
-	saveChange() {
+	saveChangeAsync() {
 
 		var promiseArr: Promise<void>[] = [];
 
@@ -96,13 +97,23 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 
 		});
 
-		promiseArr.forEach(p => {
+		var p = new Promise(async (resolve, reject) => {
 
-			p.then(() => {
-				console.log("db save...");
-			})
+			try {
+
+				for (var item of promiseArr) {
+					await item;
+				}
+				resolve();
+
+			} catch (err) {
+
+				reject(err);
+
+			}
 
 		});
+		return p;
 
 	}
 }

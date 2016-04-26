@@ -10,35 +10,33 @@ class DbContext {
 
     startToConnectAsync() {
 
-        mongoose.connect(this.connectionString, {
-            server: {
-                poolSize: 5
-            }
-        });
-
         var p = new Promise<string>((resolve, reject) => {
 
-            var db = mongoose.connection;
-            db.once("open", () => {
+            mongoose.connect(this.connectionString, {
+                server: {
+                    poolSize: 5
+                }
+            }, (err) => {
 
-                var msg = "success to connect db..";
-                resolve(msg);
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                console.log("success to connect the db..")
+                resolve();
 
             });
-            db.on("error", (err) => {
-
-                var msg = err.message;
-                reject(msg);
-
-            });
-
         });
         return p;
 
     }
 
-    closeToConnect() {
-        mongoose.disconnect();
+    closeToConnectAsync() {
+
+        return mongoose.disconnect((err) => {
+            return Promise.resolve("stop the connection.");
+        });
+
     }
 
 }
