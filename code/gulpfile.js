@@ -195,27 +195,16 @@ gulp.task('ts_compile_es6_dist', () => {
 
     var m = merge();
 
-    var tsWeb = tsCompiler(
+    var tsNodejs = tsCompiler(
         [
-            "./src/nodejs/web/**/*.ts",
+            "./src/nodejs/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/nodejs/web",
-        "./dist/nodejs/web",
+        "src/nodejs",
+        "./dist/nodejs",
         false
     );
-    m.add(tsWeb);
-
-    var tsWebCommon = tsCompiler(
-        [
-            "./src/nodejs/common/**/*.ts",
-        ],
-        "tsconfig_es6_commonjs.json",
-        "src/nodejs/common",
-        "./dist/nodejs/common",
-        false
-    );
-    m.add(tsWebCommon);
+    m.add(tsNodejs);
 
     var tsCommon = tsCompiler(
         [
@@ -230,11 +219,11 @@ gulp.task('ts_compile_es6_dist', () => {
 
     var tsClient = tsCompiler(
         [
-            "./src/systemjs/client/**/*.ts",
+            "./src/systemjs/**/*.ts",
         ],
         "tsconfig_es6_systemjs.json",
-        "src/systemjs/client",
-        "./dist/systemjs/scripts/systemjs/client",
+        "src/systemjs",
+        "./dist/systemjs/scripts/systemjs",
         false
     );
     m.add(tsClient);
