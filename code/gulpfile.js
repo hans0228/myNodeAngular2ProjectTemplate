@@ -121,7 +121,7 @@ gulp.task('ts_compile_es6_test', () => {
 
     var m = merge();
 
-    var tsWeb = tsCompiler(
+    var tsNodejs = tsCompiler(
         [
             "./src/nodejs/**/*.ts",
         ],
@@ -130,7 +130,18 @@ gulp.task('ts_compile_es6_test', () => {
         "./test/nodejs",
         false
     );
-    m.add(tsWeb);
+    m.add(tsNodejs);
+    
+    var tsNodejsTest = tsCompiler(
+        [
+            "./src/nodejs.test/**/*.ts",
+        ],
+        "tsconfig_es6_commonjs.json",
+        "src/nodejs.test",
+        "./test/nodejs.test",
+        false
+    );
+    m.add(tsNodejsTest);
 
     var tsCommon = tsCompiler(
         [
@@ -154,27 +165,27 @@ gulp.task('ts_compile_es6_test', () => {
     );
     m.add(tsCommonTest);
 
-    var tsClient = tsCompiler(
+    var tsSystemjs = tsCompiler(
         [
             "./src/systemjs/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
         "src/systemjs",
-        "./test/systemjs/scripts/systemjs",
+        "./test/systemjs",
         false
     );
-    m.add(tsClient);
+    m.add(tsSystemjs);
 
-    var tsClientCommon = tsCompiler(
+    var tsSystemjsTest = tsCompiler(
         [
-            "./src/common/**/*.ts",
+            "./src/systemjs.test/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/common",
-        "./test/systemjs/scripts/common",
+        "src/systemjs.test",
+        "./test/systemjs.test",
         false
     );
-    m.add(tsClientCommon);
+    m.add(tsSystemjsTest);
 
     return m;
 
@@ -194,7 +205,7 @@ gulp.task('ts_compile_es6_dist', () => {
         false
     );
     m.add(tsWeb);
-    
+
     var tsWebCommon = tsCompiler(
         [
             "./src/nodejs/common/**/*.ts",
