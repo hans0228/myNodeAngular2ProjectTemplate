@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/main.d.ts" />
+/// <reference path="../../../../typings/main.d.ts" />
 
 // import * as ref from "./vendor";
 // import * as utilM from "../myApp.core/common/utilities";

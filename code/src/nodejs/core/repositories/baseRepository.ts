@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import {AppHelper} from "../../common/appHelper";
+import {AppHelper} from "../../../common/appHelper";
 
 export abstract class BaseRepository<T extends mongoose.Document> {
 

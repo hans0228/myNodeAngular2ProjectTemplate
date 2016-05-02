@@ -6,9 +6,9 @@ import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 import {AppHelper} from "../../common/appHelper";
 
-import {UserRepository, IUser} from "../../nodejs/repositories/userRepository";
-import {DbContext} from "../../nodejs/common/dbContext";
-import {Configuration} from "../../nodejs/common/configuration";
+import {UserRepository, IUser} from "../../nodejs/core/repositories/userRepository";
+import {DbContext} from "../../nodejs/core/common/dbContext";
+import {Configuration} from "../../nodejs/core/common/configuration";
 
 describe("repository => user", () => {
 
