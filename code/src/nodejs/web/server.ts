@@ -7,8 +7,8 @@ import * as path from "path";
 
 //import dbM = require('../../myApp.core/repositories/dbContext');
 import {initRouter} from "./_index";
-import {Configuration} from "../common/configuration";
-import {DbContext} from "../common/dbContext";
+import {Configuration} from "../core/common/configuration";
+import {DbContext} from "../core/common/dbContext";
 import {AppHelper} from "../../common/appHelper";
 
 var init = async () => {

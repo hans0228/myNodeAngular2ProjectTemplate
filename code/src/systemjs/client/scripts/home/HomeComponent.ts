@@ -1,6 +1,6 @@
 /// <reference path="../../../../../typings/browser.d.ts" />
 
-import {Component} from "angular2/core";
+import {Component} from '@angular/core';
 import {HomeService} from "./HomeService";
 import {AppHelper} from "../../../../common/appHelper";
 

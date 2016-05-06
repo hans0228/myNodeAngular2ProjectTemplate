@@ -76,13 +76,14 @@ gulp.task("copyAssetsToDist", () => {
     var clientAsset = gulp.src([
         "./src/systemjs/client/**/*.html",
         "./src/systemjs/client/**/*.css",
-    ]).pipe(gulp.dest("./dist/systemjs/script/client/"));
+        "./src/systemjs/client/**/*.js",
+    ]).pipe(gulp.dest("./dist/systemjs/scripts/systemjs/client/"));
     m.add(clientAsset);
 
     var angular2 = gulp.src([
-        "./node_modules/angular2/**/*.js",
-        "./node_modules/angular2/**/*.js.map"
-    ]).pipe(gulp.dest("./dist/systemjs/scripts/node_modules/angular2/"));
+        "./node_modules/@angular/**/*.js",
+        "./node_modules/@angular/**/*.js.map"
+    ]).pipe(gulp.dest("./dist/systemjs/scripts/node_modules/@angular/"));
     m.add(angular2);
 
     var system = gulp.src("./node_modules/systemjs/dist/**/*.*")
@@ -96,6 +97,18 @@ gulp.task("copyAssetsToDist", () => {
     var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
         .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/es6-shim/"));
     m.add(es6Shim);
+    
+    var zonejs = gulp.src("./node_modules/zone.js/**/*.js")
+        .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/zone.js/"));
+    m.add(zonejs);
+    
+    var zonejs = gulp.src("./node_modules/zone.js/**/*.js")
+        .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/zone.js/"));
+    m.add(zonejs);
+
+    var reflectMetadata = gulp.src("./node_modules/reflect-metadata/**/*.js")
+        .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/reflect-metadata/"));
+    m.add(reflectMetadata);
 
     return m;
 
@@ -281,7 +294,7 @@ gulp.task("server", () => {
         ext: "html js",
         env: {
             "NODE_ENV": 'development',
-            "port": 1235
+            "port": 1237
         }
         //ignore: ["ignored.js"],
         //tasks: ["lint"] ,

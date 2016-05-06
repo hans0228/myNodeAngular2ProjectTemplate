@@ -4,7 +4,7 @@ import * as exp from "express";
 import {BaseController} from "../common/baseController";
 import {Foo} from "../../../common/foo";
 import {AppHelper} from "../../../common/AppHelper";
-import {UserRepository} from "../../repositories/userRepository";
+import {UserRepository} from "../../core/repositories/userRepository";
 
 export class HomeController extends BaseController {
 
