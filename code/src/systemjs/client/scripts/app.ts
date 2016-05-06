@@ -1,5 +1,0 @@
-/// <reference path="../../../../typings/browser.d.ts" />
-
-import {bootstrap} from "angular2/platform/browser";
-import {HomeComponent} from "./_requireSystemjs";
-bootstrap(HomeComponent);

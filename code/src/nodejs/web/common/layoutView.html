@@ -7,40 +7,16 @@
     <base href="/">
 
     <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
+    <!-- Polyfill(s) for older browsers -->
     <script src="/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="/scripts/node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="/scripts/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-    <script src="/scripts/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="/scripts/node_modules/zone.js/dist/zone.js"></script>
+    <script src="/scripts/node_modules/reflect-metadata/Reflect.js"></script>
     <script src="/scripts/node_modules/systemjs/dist/system.src.js"></script>
-    <script src="/scripts/node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="/scripts/node_modules/angular2/bundles/angular2.dev.js"></script>
-
-
-
-
+    <!-- 2. Configure SystemJS -->
+    <script src="/scripts/systemjs/client/scripts/systemjs.config.js"></script>
     <script>
-        System.config({
-        // map: {
-        //     "reflect-metadata":"/scripts/node_modules/reflect-metadata/Reflect.js"
-        // },        
-        packages:{ 
-            "scripts":{
-                "systemjs":{
-                    "client":{
-                        "scripts":{
-                            format: "register",
-                            defaultExtension: "js"
-                        }     
-                    }
-                }
-            }
-        }
-    });
-    System.import("scripts/systemjs/client/scripts/app")
-        .then(null, console.error.bind(console));
+        System.import('app').catch(function(err){ console.error(err);  });
     </script>
-
 
 </head>
 

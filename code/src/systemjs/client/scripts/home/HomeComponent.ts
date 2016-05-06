@@ -1,10 +1,9 @@
 /// <reference path="../../../../../typings/browser.d.ts" />
-import {Component, Inject, forwardRef} from "angular2/core";
+import {Component, Inject, forwardRef} from "@angular/core";
+import {HomeService} from "../_requireSystemjs";
 
-//import {HomeService} from "../_requireSystemjs";
 //import {AppHelper} from "../../../../common/_requireCommon";
-
-import {HomeService} from "./HomeService";
+//import {HomeService} from "./HomeService";
 
 @Component({
     selector: 'my-app',

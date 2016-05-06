@@ -2,11 +2,10 @@
 
 import "reflect-metadata";
 
-import {Injector, provide} from "angular2/core";
-import {BaseRequestOptions, Http, Response, ResponseOptions} from "angular2/http";
-import {MockBackend, MockConnection} from "angular2/http/testing";
-import {RouteConfig, Router, ROUTER_DIRECTIVES, RouteRegistry} from "angular2/router";
-import {NgZone} from "angular2/src/core/zone/ng_zone";
+import {Injector, provide, ReflectiveInjector} from "@angular/core";
+import {BaseRequestOptions, Http, Response, ResponseOptions} from "@angular/http";
+import {MockBackend, MockConnection} from "@angular/http/testing";
+import {Router, ROUTER_DIRECTIVES} from "@angular/router";
 
 import {assert} from "chai";
 import * as sinon from "sinon";
@@ -39,7 +38,7 @@ describe("client side test => HomeComponent", () => {
 
     var getInjector = () => {
 
-        var jj = Injector.resolveAndCreate([
+        var jj = ReflectiveInjector.resolveAndCreate([
 
             HomeComponent,
             HomeService,
