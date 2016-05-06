@@ -2,23 +2,24 @@
 var winston = require("winston");
 require('winston-loggly');
 
-import {IMyLog, myLogLevelEnum} from "../../../common/IMyLog";
+import {IMyLog,myLogLevelEnum} from "../../../common/_requireCommon";
+
 
 //https://www.loggly.com/
-export class myServerLog implements IMyLog {
+export class MyServerLog implements IMyLog {
 
-	private static _instance: IMyLog = new myServerLog();
+	private static _instance: IMyLog = new MyServerLog();
 
 	static getInstance() {
-		return myServerLog._instance;
+		return MyServerLog._instance;
 	}
 
 	constructor() {
 
-		if (myServerLog._instance) {
+		if (MyServerLog._instance) {
 			throw new Error("Error: Instantiation failed => Use SingletonDemo.getInstance() instead of new.");
 		}
-		myServerLog._instance = this;
+		MyServerLog._instance = this;
 
 		winston.add(winston.transports.Loggly, {
 			token: "xxxx",

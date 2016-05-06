@@ -1,8 +1,6 @@
 /// <reference path="../../../../typings/main.d.ts" />
 
 import * as mongoose from "mongoose";
-import {Configuration} from "./configuration"
-
 
 class DbContext {
 

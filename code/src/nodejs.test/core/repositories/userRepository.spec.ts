@@ -4,17 +4,17 @@ import "reflect-metadata";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
-import {AppHelper} from "../../../common/appHelper";
 
-import {UserRepository, IUser} from "../../../nodejs/core/repositories/userRepository";
-import {DbContext} from "../../../nodejs/core/common/dbContext";
-import {Configuration} from "../../../nodejs/core/common/configuration";
+import {AppHelper} from "../../../common/_requireCommon";
+import {UserRepository, BaseRepository, DbContext, IUser} from "../../../nodejs/_requireNodejs";
+
+
 
 describe("repository => user", () => {
 
 
     var sandbox: Sinon.SinonSandbox;
-    var mydb: DbContext;
+    // var mydb: DbContext;
 
     // beforeEach(async function (done: MochaDone) {
     //     this.timeout(6000);

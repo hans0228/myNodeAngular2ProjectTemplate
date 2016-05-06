@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
-import {BaseRepository} from "./baseRepository";
+//import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "../../_requireNodejs";
 
 class UserRepository extends BaseRepository<IUser> {
 

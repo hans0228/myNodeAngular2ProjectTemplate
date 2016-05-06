@@ -5,11 +5,8 @@ import * as exp from "express";
 import * as bodyParser from "body-parser";
 import * as path from "path";
 
-//import dbM = require('../../myApp.core/repositories/dbContext');
-import {initRouter} from "./_index";
-import {Configuration} from "../common/configuration";
-import {DbContext} from "../common/dbContext";
-import {AppHelper} from "../../common/appHelper";
+import {InitRouter} from "../_requireNodejs";
+import {AppHelper} from "../../common/_requireCommon";
 
 var init = async () => {
 
@@ -41,7 +38,7 @@ var init = async () => {
     });
 
     //register controllers
-    initRouter(app);
+    InitRouter(app);
 
     //server start
     var port: number = process.env.port || 1234;

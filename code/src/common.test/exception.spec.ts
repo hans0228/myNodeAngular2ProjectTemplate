@@ -3,8 +3,6 @@
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
-import {Foo} from "../common/foo";
-import {Bar} from "../common/bar";
 
 describe("server side test => exception", () => {
 

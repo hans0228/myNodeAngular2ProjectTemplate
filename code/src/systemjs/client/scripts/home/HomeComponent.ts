@@ -1,8 +1,10 @@
 /// <reference path="../../../../../typings/browser.d.ts" />
+import {Component, Inject, forwardRef} from "angular2/core";
 
-import {Component} from "angular2/core";
+//import {HomeService} from "../_requireSystemjs";
+//import {AppHelper} from "../../../../common/_requireCommon";
+
 import {HomeService} from "./HomeService";
-import {AppHelper} from "../../../../common/appHelper";
 
 @Component({
     selector: 'my-app',
@@ -23,7 +25,7 @@ export class HomeComponent {
     public Wording: string = "";
     public AsyncWording: string = "";
 
-    constructor(private homeSer: HomeService) { }
+    constructor( @Inject(forwardRef(() => HomeService)) private homeSer) { }
 
     showGreetLog(name: string) {
 
