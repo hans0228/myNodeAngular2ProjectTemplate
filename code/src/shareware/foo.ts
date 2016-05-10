@@ -1,4 +1,4 @@
-import {Bar} from "../common/bar"
+import {Bar} from "../shareware/bar"
 
 export class Foo {
 

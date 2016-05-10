@@ -2,7 +2,7 @@
 
 import * as exp from "express";
 import {BaseController} from "../../../nodejs/web/common/baseController";
-import {Foo} from "../../../common/foo";
+import {Foo} from "../../../shareware/foo";
 
 export class HomeController extends BaseController {
 

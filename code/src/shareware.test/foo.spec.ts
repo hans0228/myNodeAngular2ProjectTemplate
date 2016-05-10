@@ -4,8 +4,8 @@ import "reflect-metadata";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
-import {Bar} from "../common/bar";
-import {Foo} from "../common/foo";
+import {Bar} from "../shareware/bar";
+import {Foo} from "../shareware/foo";
 
 describe("server side test => foo", () => {
 
@@ -53,8 +53,8 @@ describe("server side test => foo", () => {
 
         var excepted = 456;
         var isGetNumberBeCalledCount = 0;
-        var fooProxy = proxyquire("../common/foo", {
-            "../common/bar": {
+        var fooProxy = proxyquire("../shareware/foo", {
+            "../shareware/bar": {
                 Bar:
                 class BarStub {
 

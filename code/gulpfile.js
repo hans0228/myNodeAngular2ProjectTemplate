@@ -156,27 +156,27 @@ gulp.task('ts_compile_es6_test', () => {
     );
     m.add(tsNodejsTest);
 
-    var tsCommon = tsCompiler(
+    var tsShareware = tsCompiler(
         [
-            "./src/common/**/*.ts",
+            "./src/shareware/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/common",
-        "./test/common",
+        "src/shareware",
+        "./test/shareware",
         false
     );
-    m.add(tsCommon);
+    m.add(tsShareware);
 
-    var tsCommonTest = tsCompiler(
+    var tsSharewareTest = tsCompiler(
         [
-            "./src/common.test/**/*.ts",
+            "./src/shareware.test/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/common.test",
-        "./test/common.test",
+        "src/shareware.test",
+        "./test/shareware.test",
         false
     );
-    m.add(tsCommonTest);
+    m.add(tsSharewareTest);
 
     var tsSystemjs = tsCompiler(
         [
@@ -218,17 +218,17 @@ gulp.task('ts_compile_es6_dist', () => {
         false
     );
     m.add(tsNodejs);
-
-    var tsCommon = tsCompiler(
+    
+   var tsShareware = tsCompiler(
         [
-            "./src/common/**/*.ts",
+            "./src/shareware/**/*.ts",
         ],
         "tsconfig_es6_commonjs.json",
-        "src/common",
-        "./dist/common",
+        "src/shareware",
+        "./dist/shareware",
         false
     );
-    m.add(tsCommon);
+    m.add(tsShareware);
 
     var tsClient = tsCompiler(
         [
@@ -241,16 +241,16 @@ gulp.task('ts_compile_es6_dist', () => {
     );
     m.add(tsClient);
 
-    var tsClientCommon = tsCompiler(
+    var tsClientShareware = tsCompiler(
         [
-            "./src/common/**/*.ts",
+            "./src/shareware/**/*.ts",
         ],
         "tsconfig_es6_systemjs.json",
-        "src/common",
-        "./dist/systemjs/scripts/common",
+        "src/shareware",
+        "./dist/systemjs/scripts/shareware",
         false
     );
-    m.add(tsClientCommon);
+    m.add(tsClientShareware);
 
     return m;
 
