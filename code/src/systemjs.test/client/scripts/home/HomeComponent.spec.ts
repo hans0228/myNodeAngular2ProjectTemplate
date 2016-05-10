@@ -10,7 +10,8 @@ import {Router, ROUTER_DIRECTIVES} from "@angular/router";
 import {assert} from "chai";
 import * as sinon from "sinon";
 
-import {HomeComponent, HomeService} from "../../../../systemjs/client/scripts/_requireSystemjs";
+import {HomeComponent} from "../../../../systemjs/client/scripts/home/HomeComponent";
+import {HomeService} from "../../../../systemjs/client/scripts/home/HomeService";
 
 describe("client side test => HomeComponent", () => {
 

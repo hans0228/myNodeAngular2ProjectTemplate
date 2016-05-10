@@ -1,4 +1,4 @@
-import {Bar} from "./_requireCommon";
+import {Bar} from "../common/bar"
 
 export class Foo {
 

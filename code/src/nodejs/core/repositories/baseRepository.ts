@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import {AppHelper} from "../../../common/_requireCommon";
+import {AppHelper} from "../../../common/appHelper";
 
 export abstract class BaseRepository<T extends mongoose.Document> {
 
@@ -18,7 +18,7 @@ export abstract class BaseRepository<T extends mongoose.Document> {
 	getAll() {
 
 		var documentName = this.getDocumentName();
-		var schema = this.getSchema()	;
+		var schema = this.getSchema();
 		try {
 			return mongoose.model<T>(documentName, schema);
 		} catch (ex) {

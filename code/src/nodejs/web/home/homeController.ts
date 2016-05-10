@@ -1,8 +1,8 @@
 /// <reference path="../../../../typings/main.d.ts" />
 
 import * as exp from "express";
-import {BaseController} from "../../_requireNodejs";
-import {Foo} from "../../../common/_requireCommon";
+import {BaseController} from "../../../nodejs/web/common/baseController";
+import {Foo} from "../../../common/foo";
 
 export class HomeController extends BaseController {
 

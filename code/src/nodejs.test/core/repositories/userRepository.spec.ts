@@ -5,10 +5,10 @@ import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 
-import {AppHelper} from "../../../common/_requireCommon";
-import {UserRepository, BaseRepository, DbContext, IUser} from "../../../nodejs/_requireNodejs";
-
-
+import {AppHelper} from "../../../common/appHelper";
+import {UserRepository,IUser} from "../../../nodejs/core/repositories/userRepository";
+import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
+import {DbContext} from "../../../nodejs/core/common/dbContext";
 
 describe("repository => user", () => {
 

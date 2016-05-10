@@ -5,8 +5,9 @@ import * as exp from "express";
 import * as bodyParser from "body-parser";
 import * as path from "path";
 
-import {InitRouter} from "../_requireNodejs";
-import {AppHelper} from "../../common/_requireCommon";
+import {AppHelper} from "../../common/appHelper";
+import {InitRouter} from "../../nodejs/web/initRouter";
+
 
 var init = async () => {
 
