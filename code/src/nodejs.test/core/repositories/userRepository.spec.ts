@@ -4,75 +4,70 @@ import "reflect-metadata";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
-
-import {AppHelper} from "../../../common/appHelper";
-import {UserRepository,IUser} from "../../../nodejs/core/repositories/userRepository";
-import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 import {DbContext} from "../../../nodejs/core/common/dbContext";
+var mockgoose = require("mockgoose");
+
+import {AppHelper} from "../../../shareware/appHelper";
+import {UserRepository, IUser} from "../../../nodejs/core/repositories/userRepository";
+import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 
 describe("repository => user", () => {
 
-
     var sandbox: Sinon.SinonSandbox;
-    // var mydb: DbContext;
+    var mydb: DbContext;
 
-    // beforeEach(async function (done: MochaDone) {
-    //     this.timeout(6000);
+    beforeEach(async () => {
 
-    //     var connectionStr = "mongodb://xxx";
-    //     mydb = new DbContext(connectionStr);
-    //     await mydb.startToConnectAsync();
+        var connectionStr = "mongodb://xxx";
+        mydb = new DbContext(connectionStr);
+        mydb.isInMemory = true;
+        await mydb.connectAsync();
+        sandbox = sinon.sandbox.create();
 
-    //     sandbox = sinon.sandbox.create();
+    });
 
-    //     done();
-    // });
+    afterEach(async () => {
 
-    // afterEach(async () => {
+        sandbox.restore();
+        await mydb.closeAsync();
 
-    //     sandbox.restore();
+    });
 
-    //     await mydb.closeToConnectAsync();
+    it("create user", async () => {
+        //this.timeout(6000);
 
-    // });
+        var userRep = new UserRepository();
 
-    // it("create user", async () => {
-    //     //this.timeout(6000);
+        //add
+        var newObj = userRep.createNewEntity();
+        newObj.name = "Bibby";
+        newObj.age = 18;
+        newObj.sex = true;
+        newObj.birthday = new Date();
+        userRep.add(newObj);
+        await userRep.saveChangeAsync();
 
-    //     var userRep = new UserRepository();
+        //retrive
+        var getAllUsersAsync = () => {
 
-    //     //add
-    //     var newObj = userRep.createNewEntity();
-    //     newObj.name = "Bibby";
-    //     newObj.age = 18;
-    //     newObj.sex = true;
-    //     newObj.birthday = new Date();
-    //     userRep.add(newObj);
-    //     await userRep.saveChangeAsync();
+            return userRep.getAll()
+                .find({})
+                .exec();
 
-    //     //retrive
-    //     var getAllUsersAsync = () => {
+        }
+        var all = await getAllUsersAsync();
+        assert.equal(all.length, 1);
 
-    //         return userRep.getAll().find({})
-    //             .exec((err, res) => {
-    //                 return Promise.resolve<IUser[]>(res);
-    //             });
+        //delete
+        for (var item of all) {
+            userRep.remove(item);
+        }
+        await userRep.saveChangeAsync();
 
-    //     }
-    //     var all = await getAllUsersAsync();
-    //     assert.equal(all.length, 1);
+        all = await getAllUsersAsync();
+        assert.equal(all.length, 0);
 
-    //     //delete
-    //     for (var item of all) {
-    //         userRep.remove(item);
-    //     }
-    //     await userRep.saveChangeAsync();
-
-    //     all = await getAllUsersAsync();
-    //     assert.equal(all.length, 0);
-
-
-    // });
+    });
 
 
 

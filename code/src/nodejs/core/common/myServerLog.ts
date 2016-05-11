@@ -2,7 +2,7 @@
 var winston = require("winston");
 require('winston-loggly');
 
-import {IMyLog, myLogLevelEnum} from "../../../common/IMyLog"
+import {IMyLog, myLogLevelEnum} from "../../../shareware/IMyLog"
 
 
 //https://www.loggly.com/

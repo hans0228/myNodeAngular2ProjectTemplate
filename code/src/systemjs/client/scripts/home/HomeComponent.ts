@@ -2,7 +2,7 @@
 import {Component, Inject, forwardRef} from "@angular/core";
 
 import {HomeService} from "../../../../systemjs/client/scripts/home/HomeService";
-import {AppHelper} from "../../../../common/appHelper.ts";
+import {AppHelper} from "../../../../shareware/appHelper.ts";
 
 @Component({
     selector: 'my-app',

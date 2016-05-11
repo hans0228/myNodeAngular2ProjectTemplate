@@ -5,7 +5,7 @@ import * as exp from "express";
 import * as bodyParser from "body-parser";
 import * as path from "path";
 
-import {AppHelper} from "../../common/appHelper";
+import {AppHelper} from "../../shareware/appHelper";
 import {InitRouter} from "../../nodejs/web/initRouter";
 
 
@@ -30,7 +30,7 @@ var init = async () => {
 
     //connect to db
     // var mydb = new DbContext(Configuration.connectionString);
-    // mydb.startToConnectAsync();
+    // mydb.connectAsync();
 
     //router
     app.all('*', (req, res, next) => {
