@@ -7,46 +7,45 @@ import * as path from "path";
 
 import {AppHelper} from "../../shareware/appHelper";
 import {InitRouter} from "../../nodejs/web/initRouter";
+import {DbContext} from "./../core/common/dbContext";
+import {Configuration} from "./../core/common/configuration";
 
+var app = exp();
 
-var init = async () => {
+// view engine setup
+var vash = require("vash");
+app.engine("html", vash.__express);
+app.set("views", path.join(__dirname, "./"));
+app.set("view engine", "html");
 
-    var app = exp();
+// uncomment after placing your favicon in /public
+//var favicon = require('serve-favicon');
+//app.use(favicon(__dirname + '/public/favicon.ico'));
 
-    // view engine setup
-    var vash = require("vash");
-    app.engine("html", vash.__express);
-    app.set("views", path.join(__dirname, "./"));
-    app.set("view engine", "html");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(cookieParser());
+app.use(exp.static(path.join(__dirname, "../../systemjs")));
 
-    // uncomment after placing your favicon in /public
-    //var favicon = require('serve-favicon');
-    //app.use(favicon(__dirname + '/public/favicon.ico'));
+//connect to db
+// var mydb = new DbContext(Configuration.connectionString);
+// mydb.connectAsync();
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
-    //app.use(cookieParser());
-    app.use(exp.static(path.join(__dirname, "../../systemjs")));
+//router
+app.all('*', (req, res, next) => {
+    console.log(req.method, req.url);
+    next();
+});
 
-    //connect to db
-    // var mydb = new DbContext(Configuration.connectionString);
-    // mydb.connectAsync();
+//register controllers
+InitRouter(app);
 
-    //router
-    app.all('*', (req, res, next) => {
-        console.log(req.method, req.url);
-        next();
-    });
+//server start
+var port: number = process.env.port || 1234;
+app.listen(port);
 
-    //register controllers
-    InitRouter(app);
-
-    //server start
-    var port: number = process.env.port || 1234;
-    app.listen(port);
-
-    console.log("server.ts, path => ", __dirname);
-    console.log(`::${port} server start...`);
+console.log("server.ts, path => ", __dirname);
+console.log(`::${port} server start...`);
 
 
     //app.use('/', routes);
@@ -82,9 +81,3 @@ var init = async () => {
     //        error: {}
     //    });
     //});
-
-
-    //module.exports = app;
-}
-
-init();

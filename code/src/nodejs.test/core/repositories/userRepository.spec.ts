@@ -18,8 +18,7 @@ describe("repository => user", () => {
 
     beforeEach(async () => {
 
-        var connectionStr = "mongodb://xxx";
-        mydb = new DbContext(connectionStr);
+        mydb = new DbContext("xxx");
         mydb.isInMemory = true;
         await mydb.connectAsync();
         sandbox = sinon.sandbox.create();
@@ -34,7 +33,6 @@ describe("repository => user", () => {
     });
 
     it("create user", async () => {
-        //this.timeout(6000);
 
         var userRep = new UserRepository();
 

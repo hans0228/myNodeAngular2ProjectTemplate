@@ -77,7 +77,7 @@ export class DbContext {
                 reject(err);
                 return;
             }
-            console.log("success to connect the db..")
+            //console.log("success to connect the db..")
             resolve();
 
         });
