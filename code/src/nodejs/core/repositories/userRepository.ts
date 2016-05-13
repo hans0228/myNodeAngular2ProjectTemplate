@@ -1,8 +1,14 @@
 import * as mongoose from "mongoose";
 import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 
+export interface IUserEntity extends mongoose.Document {
+	name: string;
+	age: number;
+	sex: boolean;
+	birthday: Date;
+}
 
-class UserRepository extends BaseRepository<IUser> {
+export class UserRepository extends BaseRepository<IUserEntity> {
 
 	getDocumentName() {
 		return "User";
@@ -22,12 +28,3 @@ class UserRepository extends BaseRepository<IUser> {
 	}
 
 }
-
-interface IUser extends mongoose.Document {
-	name: string;
-	age: number;
-	sex: boolean;
-	birthday: Date;
-}
-
-export {IUser, UserRepository}

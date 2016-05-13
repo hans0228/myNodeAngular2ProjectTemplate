@@ -4,13 +4,15 @@ import "reflect-metadata";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
-import {DbContext} from "../../../nodejs/core/common/dbContext";
+
+import * as request from "supertest";
+
 var mockgoose = require("mockgoose");
+import {DbContext} from "../../../nodejs/core/common/dbContext";
 
 import {AppHelper} from "../../../shareware/appHelper";
 import {InitRouter} from "./../../../nodejs/web/initRouter";
 
-import * as request from "supertest";
 import * as exp from "express";
 var app = exp();
 

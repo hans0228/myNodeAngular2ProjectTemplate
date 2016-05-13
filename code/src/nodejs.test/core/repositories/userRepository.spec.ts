@@ -8,7 +8,7 @@ import {DbContext} from "../../../nodejs/core/common/dbContext";
 var mockgoose = require("mockgoose");
 
 import {AppHelper} from "../../../shareware/appHelper";
-import {UserRepository, IUser} from "../../../nodejs/core/repositories/userRepository";
+import {UserRepository, IUserEntity} from "../../../nodejs/core/repositories/userRepository";
 import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 
 describe("repository => user", () => {

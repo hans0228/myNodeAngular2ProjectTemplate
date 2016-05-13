@@ -97,7 +97,7 @@ describe("client side test => HomeComponent", () => {
 
     });
 
-    it("showGreetLogAsync", async (done: MochaDone) => {
+    it("showGreetLogAsync", async () => {
 
         var expectedAsync = "Hello, Bibby async";
 
@@ -105,9 +105,6 @@ describe("client side test => HomeComponent", () => {
         await h.showGreetLogAsync();
 
         assert.equal(h.AsyncWording, expectedAsync);
-
-        done();
-
 
     });
 

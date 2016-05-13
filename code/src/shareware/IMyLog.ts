@@ -1,13 +1,8 @@
-//myLog
+
+import {MyLogLevelEnum} from "./MyLogLevelEnum.ts";
+
 export interface IMyLog {
 
-	log(level: myLogLevelEnum, obj: Object);
-
-}
-export enum myLogLevelEnum {
-
-	info,
-	warn,
-	error
+	log(level: MyLogLevelEnum, obj: Object);
 
 }

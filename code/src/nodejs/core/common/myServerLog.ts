@@ -2,7 +2,8 @@
 var winston = require("winston");
 require('winston-loggly');
 
-import {IMyLog, myLogLevelEnum} from "../../../shareware/IMyLog"
+import {IMyLog} from "../../../shareware/IMyLog";
+import {MyLogLevelEnum} from "./../../../shareware/MyLogLevelEnum";
 
 
 //https://www.loggly.com/
@@ -30,9 +31,9 @@ export class MyServerLog implements IMyLog {
 
 	}
 
-	log(level: myLogLevelEnum, obj: Object) {
+	log(level: MyLogLevelEnum, obj: Object) {
 
-		winston.log(myLogLevelEnum[level], JSON.stringify(obj));
+		winston.log(MyLogLevelEnum[level], JSON.stringify(obj));
 
 	}
 

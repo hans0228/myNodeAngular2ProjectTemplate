@@ -4,6 +4,7 @@ import "reflect-metadata";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
+
 import {Bar} from "../shareware/bar";
 import {Foo} from "../shareware/foo";
 
