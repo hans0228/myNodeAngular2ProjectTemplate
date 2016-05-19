@@ -13,7 +13,7 @@ import * as sinon from "sinon";
 import {HomeComponent} from "../../../../systemjs/client/scripts/home/HomeComponent";
 import {HomeService} from "../../../../systemjs/client/scripts/home/HomeService";
 
-describe("client side test => HomeComponent", () => {
+describe(`Features: HomeComponent is the first component in the client side.`, () => {
 
     let sandbox: Sinon.SinonSandbox;
     let injector: Injector;
@@ -85,28 +85,50 @@ describe("client side test => HomeComponent", () => {
         return obj;
     };
 
+    describe(`Scenario: show greet wording.`, () => {
 
-    it("showGreetLog", () => {
+        let homeComponent: HomeComponent;
 
-        var expected = "Hello, Bibby";
+        it(`Given: I am in the HomeComponent.`, () => {
 
-        var h: HomeComponent = injector.get(HomeComponent);
-        h.showGreetLog("Bibby");
+            homeComponent = injector.get(HomeComponent);
 
-        assert.equal(h.Wording, expected);
+        });
+        it(`When: I call the showGreetLog method and put the "Bibby".`, () => {
+
+            homeComponent.showGreetLog("Bibby");
+
+        });
+        it(`Then: I should see the homeComponent.Wording is "Hello, Bibby"`, () => {
+
+            var expected = "Hello, Bibby";
+            assert.equal(homeComponent.Wording, expected);
+
+        });
 
     });
 
-    it("showGreetLogAsync", async () => {
+    describe(`Scenario: show greet wording .`, () => {
 
-        var expectedAsync = "Hello, Bibby async";
+        let homeComponent: HomeComponent;
 
-        var h: HomeComponent = injector.get(HomeComponent);
-        await h.showGreetLogAsync();
+        it(`Given: I am in the HomeComponent.`, () => {
 
-        assert.equal(h.AsyncWording, expectedAsync);
+            homeComponent = injector.get(HomeComponent);
+
+        });
+        it(`When: I call the showGreetLogAsync method.`, async () => {
+
+            await homeComponent.showGreetLogAsync();
+
+        });
+        it(`Then: I should see the homeComponent.AsyncWording is "Hello, Bibby"`, () => {
+
+            var expectedAsync = "Hello, Bibby async";
+            assert.equal(homeComponent.AsyncWording, expectedAsync);
+
+        });
 
     });
-
 
 });
