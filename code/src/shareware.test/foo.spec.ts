@@ -4,91 +4,150 @@ import "reflect-metadata";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
+import {AppHelper} from "./../shareware/appHelper";
+
 
 import {Bar} from "../shareware/bar";
 import {Foo} from "../shareware/foo";
 
-describe("server side test => foo", () => {
+var sandbox: Sinon.SinonSandbox;
 
-    var sandbox: Sinon.SinonSandbox;
+before((done: MochaDone) => {
 
-    beforeEach((done: MochaDone) => {
+    sandbox = sinon.sandbox.create();
+    //mockgoose.reset();
+    done();
 
-        sandbox = sinon.sandbox.create();
-        //mockgoose.reset();
-        done();
+});
+
+after((done: MochaDone) => {
+
+    sandbox.restore();
+    //mockgoose.reset();
+    done();
+
+});
+
+describe(`Feature: test easy class`, () => {
+
+    describe(`Scenario: Test the method of getName.`, () => {
+
+        var f: Foo;
+        var act: string;
+
+        it(`Given: Prepare the Foo class.`, () => {
+
+            f = new Foo();
+
+        });
+        it(`When: Exectute the method of getName.`, () => {
+
+            act = f.getName();
+
+        });
+        it(`Then: The result equal "Bibby_Foo"`, () => {
+
+            var expected = "Bibby_Foo";
+            assert.equal(act, expected);
+
+        });
 
     });
 
-    afterEach((done: MochaDone) => {
+    describe(`Scenario: Test the async method of getNameAsync.`, () => {
 
-        sandbox.restore();
-        //mockgoose.reset();
-        done();
+        var f: Foo;
+        var act: string;
 
-    });
+        it(`Given: Prepare the Foo class.`, () => {
 
-    it("getName", () => {
+            f = new Foo();
 
-        var expected = "Bibby_Foo";
-        var f = new Foo();
+        });
+        it(`When: Exectute the method of getNameAsync.`, async () => {
 
-        var actual = f.getName();
+            act = await f.getNameAsync();
 
-        assert.equal(actual, expected);
+        });
+        it(`Then: The result equal "Bibby_Foo"`, () => {
 
-    });
+            var expected = "Bibby_Foo";
+            assert.equal(act, expected);
 
-    it("getNameAsync", async () => {
-
-        var expected = "Bibby_Foo";
-        var f = new Foo();
-
-        var actual = await f.getNameAsync();
-
-        assert.equal(actual, expected);
+        });
 
     });
 
-    it("getInt, proxyquire", () => {
+    describe(`Scenario: Use the proxyquire to test the method of getInt.`, () => {
 
-        var excepted = 456;
-        var isGetNumberBeCalledCount = 0;
-        var fooProxy = proxyquire("../shareware/foo", {
-            "../shareware/bar": {
-                Bar:
-                class BarStub {
+        let isGetNumberBeCalledCount = 0;
+        let foo: Foo;
+        let act: number;
 
-                    getNumber() {
-                        isGetNumberBeCalledCount++;
-                        return 456;
+        it(`Given: Prepare the fooproxy to fake the Bar.getNumber`, () => {
+
+            var fooFake = proxyquire("../shareware/foo", {
+                "../shareware/bar": {
+                    Bar:
+                    class BarStub {
+
+                        getNumber() {
+                            isGetNumberBeCalledCount++;
+                            return 456;
+                        }
+
                     }
 
                 }
+            });
 
-            }
+            foo = new fooFake.Foo();
+
+        });
+        it(`When: Execute the method of foo.getInt`, () => {
+
+            act = foo.getInt();
+
+        });
+        it(`Then: the result equal 456 and the count of Bar.getNumber is one.`, () => {
+
+            let excepted = 456;
+
+            assert.equal(act, excepted);
+            assert.equal(isGetNumberBeCalledCount, 1);
+
         });
 
-        var v: Foo = new fooProxy.Foo();
-        var actual = v.getInt();
-        assert.equal(actual, excepted);
-        assert.equal(isGetNumberBeCalledCount, 1);
-
     });
 
-    it("getInt, sinon", () => {
+    describe(`Scenario: Use the sinon to test the method of getInt.`, () => {
 
-        var expected = 0;
-        var stubBar = sandbox.stub(Bar.prototype, "getNumber")
-            .returns(0);
+        let isGetNumberBeCalledCount = 0;
+        let foo: Foo;
+        let act: number;
+        let stubBar: Sinon.SinonStub;
 
-        var foo = new Foo();
-        var actual = foo.getInt();
+        it(`Given: Prepare the fooproxy to fake the Bar.getNumber`, () => {
 
-        assert.equal(actual, expected);
-        assert.equal(stubBar.callCount, 1);
+            stubBar = sandbox.stub(Bar.prototype, "getNumber")
+                .returns(0);
+
+
+        });
+        it(`When: Execute the method of foo.getInt`, () => {
+
+            var foo = new Foo();
+            act = foo.getInt();
+
+        });
+        it(`Then: the result equal 456 and the count of Bar.getNumber is one.`, () => {
+
+            var expected = 0;
+            assert.equal(act, expected);
+            assert.equal(stubBar.callCount, 1);
+
+        });
 
     });
-
 
 });

@@ -97,11 +97,11 @@ gulp.task("copyAssetsToDist", () => {
     var es6Shim = gulp.src("./node_modules/es6-shim/**/*.js")
         .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/es6-shim/"));
     m.add(es6Shim);
-    
+
     var zonejs = gulp.src("./node_modules/zone.js/**/*.js")
         .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/zone.js/"));
     m.add(zonejs);
-    
+
     var zonejs = gulp.src("./node_modules/zone.js/**/*.js")
         .pipe(gulp.dest("./dist/systemjs/scripts/node_modules/zone.js/"));
     m.add(zonejs);
@@ -144,7 +144,7 @@ gulp.task('ts_compile_es6_test', () => {
         false
     );
     m.add(tsNodejs);
-    
+
     var tsNodejsTest = tsCompiler(
         [
             "./src/nodejs.test/**/*.ts",
@@ -218,8 +218,8 @@ gulp.task('ts_compile_es6_dist', () => {
         false
     );
     m.add(tsNodejs);
-    
-   var tsShareware = tsCompiler(
+
+    var tsShareware = tsCompiler(
         [
             "./src/shareware/**/*.ts",
         ],

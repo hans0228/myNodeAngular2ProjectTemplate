@@ -4,7 +4,7 @@ import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 
-describe("server side test => exception", () => {
+describe("  server side test => exception", () => {
 
     var sandbox: Sinon.SinonSandbox;
 

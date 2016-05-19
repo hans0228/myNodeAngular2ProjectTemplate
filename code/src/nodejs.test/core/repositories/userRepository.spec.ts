@@ -11,12 +11,12 @@ import {AppHelper} from "../../../shareware/appHelper";
 import {UserRepository, IUserEntity} from "../../../nodejs/core/repositories/userRepository";
 import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 
-describe("repository => user", () => {
+describe(`Feature: Store the data to the collection of user`, () => {
 
     var sandbox: Sinon.SinonSandbox;
     var mydb: DbContext;
 
-    beforeEach(async () => {
+    before(async () => {
 
         mydb = new DbContext("xxx");
         mydb.isInMemory = true;
@@ -25,49 +25,49 @@ describe("repository => user", () => {
 
     });
 
-    afterEach(async () => {
+    after(async () => {
 
         sandbox.restore();
         await mydb.closeAsync();
 
     });
+    
+    describe(`Scenario: create the user and store to database`, () => {
 
-    it("create user", async () => {
+        let userRep: UserRepository;
 
-        var userRep = new UserRepository();
+        it(`Given: I use the UserRepository.`, () => {
 
-        //add
-        var newObj = userRep.createNewEntity();
-        newObj.name = "Bibby";
-        newObj.age = 18;
-        newObj.sex = true;
-        newObj.birthday = new Date();
-        userRep.add(newObj);
-        await userRep.saveChangeAsync();
+            userRep = new UserRepository();
 
-        //retrive
-        var getAllUsersAsync = () => {
+        });
+        it(`When: add user data.`, async () => {
 
-            return userRep.getAll()
-                .find({})
-                .exec();
+            //add
+            var newObj = userRep.createNewEntity();
+            newObj.name = "Bibby";
+            newObj.age = 18;
+            newObj.sex = true;
+            newObj.birthday = new Date();
+            userRep.add(newObj);
+            await userRep.saveChangeAsync();
 
-        }
-        var all = await getAllUsersAsync();
-        assert.equal(all.length, 1);
+        });
+        it(`Then: the data is the same as user data.`, async () => {
 
-        //delete
-        for (var item of all) {
-            userRep.remove(item);
-        }
-        await userRep.saveChangeAsync();
+            //retrive
+            var getAllUsersAsync = () => {
 
-        all = await getAllUsersAsync();
-        assert.equal(all.length, 0);
+                return userRep.getAll()
+                    .find({})
+                    .exec();
+
+            }
+            var all = await getAllUsersAsync();
+            assert.equal(all.length, 1);
+
+        });
 
     });
-
-
-
 
 });
