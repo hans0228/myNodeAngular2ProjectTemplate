@@ -4,78 +4,86 @@ import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 
-describe("  server side test => exception", () => {
-
-    var sandbox: Sinon.SinonSandbox;
-
-    beforeEach((done: MochaDone) => {
+let sandbox: Sinon.SinonSandbox;
+let prepareToRun = () => {
+    before(async (done: MochaDone) => {
 
         sandbox = sinon.sandbox.create();
         done();
 
     });
-    afterEach((done: MochaDone) => {
+    after(async (done: MochaDone) => {
 
         sandbox.restore();
         done();
 
     });
+};
 
-    it("test, exception", () => {
+describe(`Feature: try to catch the exceptions`, () => {
 
-        var expected = "xxxxx";
+    describe(`Scenario: use "try catch" syntax to catch the excetpion`, () => {
 
-        try {
+        prepareToRun();
 
-            throw "xxxxx";
+        let act: string;
+        it(`When: Throw exception "xxx".`, () => {
 
-        } catch (ex) {
+            try {
+                throw "xxxxx";
+            } catch (ex) {
+                act = ex;
+            }
 
-            var actual = ex;
-            assert.equal(actual, expected);
+        });
+        it(`Then: The result is xxx`, () => {
 
-        }
+            var exp = "xxxxx";
+            assert.equal(act, exp);
+
+        });
+
+
     });
 
-    it("test, exception from promise", async () => {
+    describe(`Scenario: use "try catch" syntax to catch the async excetpion`, () => {
 
-        var expected = "xxxxx1";
+        prepareToRun();
 
-        var f = () => {
+        let p;
+        let act: string;
 
-            var p = new Promise<void>((resolve, reject) => {
+        it(`Given: Prepare the promise that throws the exception`, () => {
 
+            p = new Promise<void>((resolve, reject) => {
                 setTimeout(() => {
-
                     try {
-
                         throw "xxxxx1";
-
                     } catch (ex) {
-
                         reject(ex);
-
                     }
-
                 }, 500);
-
             });
-            return p;
 
-        }
+        });
 
-        try {
+        it(`When: Throw asyce the exception.`, async () => {
 
-            await f();
+            try {
+                await p;
+            } catch (ex) {
+                act = ex;
+            }
 
-        } catch (ex) {
 
-            var actual =ex;
-            assert.equal(actual, expected);
+        });
+        it(`Then: The result is "xxxxx1"`, () => {
 
-        }
+            var exp = "xxxxx1";
+            assert.equal(act, exp);
+
+        });
 
     });
-
 
 });
