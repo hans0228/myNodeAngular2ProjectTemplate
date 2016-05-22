@@ -13,79 +13,77 @@ import * as sinon from "sinon";
 import {HomeComponent} from "../../../../systemjs/client/scripts/home/HomeComponent";
 import {HomeService} from "../../../../systemjs/client/scripts/home/HomeService";
 
-describe(`Features: HomeComponent is the first component in the client side.`, () => {
-
-    let sandbox: Sinon.SinonSandbox;
-    let injector: Injector;
-
-    beforeEach((done: MochaDone) => {
+let sandbox: Sinon.SinonSandbox;
+let injector: Injector;
+let prepareToRun = () => {
+    before(async (done: MochaDone) => {
 
         sandbox = sinon.sandbox.create();
         injector = getInjector();
         done();
 
     });
-
-    afterEach((done: MochaDone) => {
+    after(async (done: MochaDone) => {
 
         sandbox.restore();
         injector = null;
         done();
 
     });
+};
+var getInjector = () => {
 
-    var getInjector = () => {
+    var jj = ReflectiveInjector.resolveAndCreate([
 
-        var jj = ReflectiveInjector.resolveAndCreate([
+        HomeComponent,
+        HomeService,
 
-            HomeComponent,
-            HomeService,
+        // provide(Router, {
+        //     useValue: new Router(new RouteRegistry(),)
+        // }),
+        //Router,
+        //RouteRegistry,
 
-            // provide(Router, {
-            //     useValue: new Router(new RouteRegistry(),)
-            // }),
-            //Router,
-            //RouteRegistry,
+        // provide(NgZone, {
+        //     useValue: new NgZone({ enableLongStackTrace: false })
+        // }),
 
-            // provide(NgZone, {
-            //     useValue: new NgZone({ enableLongStackTrace: false })
-            // }),
+        BaseRequestOptions,
+        MockBackend,
+        provide(Http, {
+            useFactory: (backend, defaultOptions) => {
+                return new Http(backend, defaultOptions);
+            },
+            deps: [MockBackend, BaseRequestOptions]
+        })
+    ]);
+    return jj;
 
-            BaseRequestOptions,
-            MockBackend,
-            provide(Http, {
-                useFactory: (backend, defaultOptions) => {
-                    return new Http(backend, defaultOptions);
-                },
-                deps: [MockBackend, BaseRequestOptions]
-            })
-        ]);
-        return jj;
-
-    };
-
-    var setFakeConnection = () => {
-        var backend: MockBackend = injector.get(MockBackend);
-        var p = new Promise((resolve, reject) => {
-            backend.connections.subscribe(c => {
-                resolve(c);
-            }, err => {
-                reject(err);
-            });
+};
+var setFakeConnection = () => {
+    var backend: MockBackend = injector.get(MockBackend);
+    var p = new Promise((resolve, reject) => {
+        backend.connections.subscribe(c => {
+            resolve(c);
+        }, err => {
+            reject(err);
         });
-        return p;
-    };
+    });
+    return p;
+};
+var setFakeResponse = (con: MockConnection, opts: ResponseOptions) => {
+    con.mockRespond(new Response(opts));
+};
+var getHomeComponent = () => {
+    var obj: HomeComponent = injector.get(HomeComponent);
+    return obj;
+};
 
-    var setFakeResponse = (con: MockConnection, opts: ResponseOptions) => {
-        con.mockRespond(new Response(opts));
-    };
-
-    var getHomeComponent = () => {
-        var obj: HomeComponent = injector.get(HomeComponent);
-        return obj;
-    };
+describe(`Features: HomeComponent is the first component in the client side.`, () => {
 
     describe(`Scenario: show greet wording.`, () => {
+
+        prepareToRun();
 
         let homeComponent: HomeComponent;
 
@@ -108,7 +106,9 @@ describe(`Features: HomeComponent is the first component in the client side.`, (
 
     });
 
-    describe(`Scenario: show greet wording .`, () => {
+    describe(`Scenario: show greet wording async.`, () => {
+
+        prepareToRun();
 
         let homeComponent: HomeComponent;
 

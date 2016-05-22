@@ -11,15 +11,12 @@ describe("  server side test => exception", () => {
     beforeEach((done: MochaDone) => {
 
         sandbox = sinon.sandbox.create();
-        //mockgoose.reset();
         done();
 
     });
-
     afterEach((done: MochaDone) => {
 
         sandbox.restore();
-        //mockgoose.reset();
         done();
 
     });

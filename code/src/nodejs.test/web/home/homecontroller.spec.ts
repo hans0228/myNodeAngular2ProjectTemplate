@@ -14,32 +14,42 @@ import {AppHelper} from "../../../shareware/appHelper";
 import {InitRouter} from "./../../../nodejs/web/initRouter";
 
 import * as exp from "express";
-var app = exp();
 
-describe("Feature: Homecontroller is the first backend controller.", () => {
+let sandbox: Sinon.SinonSandbox;
+let mydb: DbContext;
+let app;
 
-	var sandbox: Sinon.SinonSandbox;
-    var mydb: DbContext;
-
-    beforeEach(async () => {
+let prepareToRun = () => {
+    before(async (done: MochaDone) => {
 
         mydb = new DbContext("xxx");
         mydb.isInMemory = true;
         await mydb.connectAsync();
         sandbox = sinon.sandbox.create();
 
-    });
+		app = exp();
+		InitRouter(app);
 
-    afterEach(async () => {
+		done();
+
+    });
+    after(async (done: MochaDone) => {
 
         sandbox.restore();
         await mydb.closeAsync();
+		
+		app = null;
+		
+		done();
 
     });
+};
 
-	InitRouter(app);
+describe("Feature: Homecontroller is the first backend controller.", () => {
 
 	describe(`Scenario: test the api`, () => {
+
+		prepareToRun();
 
 		let fakeExected: Promise<{
 			title: string,
@@ -94,6 +104,8 @@ describe("Feature: Homecontroller is the first backend controller.", () => {
 	})
 
 	describe(`Scenario: test supertest`, () => {
+
+		prepareToRun();
 
 		let fakeRequest: Promise<{ name: string }>;
 		let act: { name: string };

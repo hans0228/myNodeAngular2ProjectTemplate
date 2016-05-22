@@ -11,28 +11,33 @@ import {AppHelper} from "../../../shareware/appHelper";
 import {UserRepository, IUserEntity} from "../../../nodejs/core/repositories/userRepository";
 import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 
-describe(`Feature: Store the data to the collection of user`, () => {
+let sandbox: Sinon.SinonSandbox;
+let mydb: DbContext;
 
-    var sandbox: Sinon.SinonSandbox;
-    var mydb: DbContext;
-
-    before(async () => {
+let prepareToRun = () => {
+    before(async (done: MochaDone) => {
 
         mydb = new DbContext("xxx");
         mydb.isInMemory = true;
         await mydb.connectAsync();
         sandbox = sinon.sandbox.create();
+        done();
 
     });
-
-    after(async () => {
+    after(async (done: MochaDone) => {
 
         sandbox.restore();
         await mydb.closeAsync();
+        done();
 
     });
-    
+};
+
+describe(`Feature: Store the data to the collection of user`, () => {
+
     describe(`Scenario: create the user and store to database`, () => {
+
+        prepareToRun();
 
         let userRep: UserRepository;
 

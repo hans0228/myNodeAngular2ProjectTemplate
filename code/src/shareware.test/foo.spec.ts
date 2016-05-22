@@ -6,31 +6,30 @@ import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 import {AppHelper} from "./../shareware/appHelper";
 
-
 import {Bar} from "../shareware/bar";
 import {Foo} from "../shareware/foo";
 
-var sandbox: Sinon.SinonSandbox;
+let sandbox: Sinon.SinonSandbox;
+let prepareToRun = () => {
+    before(async (done: MochaDone) => {
 
-before((done: MochaDone) => {
+        sandbox = sinon.sandbox.create();
+        done();
 
-    sandbox = sinon.sandbox.create();
-    //mockgoose.reset();
-    done();
+    });
+    after(async (done: MochaDone) => {
 
-});
+        sandbox.restore();
+        done();
 
-after((done: MochaDone) => {
-
-    sandbox.restore();
-    //mockgoose.reset();
-    done();
-
-});
+    });
+};
 
 describe(`Feature: test easy class`, () => {
 
     describe(`Scenario: Test the method of getName.`, () => {
+
+        prepareToRun();
 
         var f: Foo;
         var act: string;
@@ -56,6 +55,8 @@ describe(`Feature: test easy class`, () => {
 
     describe(`Scenario: Test the async method of getNameAsync.`, () => {
 
+        prepareToRun();
+
         var f: Foo;
         var act: string;
 
@@ -79,6 +80,8 @@ describe(`Feature: test easy class`, () => {
     });
 
     describe(`Scenario: Use the proxyquire to test the method of getInt.`, () => {
+
+        prepareToRun();
 
         let isGetNumberBeCalledCount = 0;
         let foo: Foo;
@@ -121,6 +124,8 @@ describe(`Feature: test easy class`, () => {
     });
 
     describe(`Scenario: Use the sinon to test the method of getInt.`, () => {
+
+        prepareToRun();
 
         let isGetNumberBeCalledCount = 0;
         let foo: Foo;
