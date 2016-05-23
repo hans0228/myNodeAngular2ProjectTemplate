@@ -57,9 +57,22 @@ var getCopyFilesPipe = (sourcePatten, targetPath) => {
 
 gulp.task("clean", (cb) => {
 
-    rimraf("./test", () => {
+    rimraf("./features", () => {
         rimraf("./dist", cb);
     });
+
+});
+
+gulp.task("copyAssetsToFeatures", () => {
+
+    var m = merge();
+
+    var features = gulp.src([
+        "./src/**/*.feature",
+    ]).pipe(gulp.dest("./features/"));
+    m.add(features);
+
+    return m;
 
 });
 
@@ -114,23 +127,7 @@ gulp.task("copyAssetsToDist", () => {
 
 });
 
-// gulp.task("copyTestToDist", () => {
-
-//     var m = merge();
-
-//     var all = gulp.src([
-//         "./test/**/*",
-//         "!./test/node/common.test{,/**/*}",
-//         "!./test/node/web.test{,/**/*}",
-//         "!./test/system/scripts/client.test{,/**/*}",
-//     ]).pipe(gulp.dest("./dist"));
-//     m.add(all);
-
-//     return m;
-
-// });
-
-gulp.task('ts_compile_es6_test', () => {
+gulp.task('ts_compile_es6_features', () => {
 
     var m = merge();
 
@@ -140,7 +137,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/nodejs",
-        "./test/nodejs",
+        "./features/nodejs",
         false
     );
     m.add(tsNodejs);
@@ -151,7 +148,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/nodejs.test",
-        "./test/nodejs.test",
+        "./features/nodejs.test",
         false
     );
     m.add(tsNodejsTest);
@@ -162,7 +159,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/shareware",
-        "./test/shareware",
+        "./features/shareware",
         false
     );
     m.add(tsShareware);
@@ -173,7 +170,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/shareware.test",
-        "./test/shareware.test",
+        "./features/shareware.test",
         false
     );
     m.add(tsSharewareTest);
@@ -184,7 +181,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/systemjs",
-        "./test/systemjs",
+        "./features/systemjs",
         false
     );
     m.add(tsSystemjs);
@@ -195,7 +192,7 @@ gulp.task('ts_compile_es6_test', () => {
         ],
         "tsconfig_es6_commonjs.json",
         "src/systemjs.test",
-        "./test/systemjs.test",
+        "./features/systemjs.test",
         false
     );
     m.add(tsSystemjsTest);
@@ -256,27 +253,18 @@ gulp.task('ts_compile_es6_dist', () => {
 
 });
 
-gulp.task("test_node", function () {
-
-    return gulp.src(
-        [
-            "./test/**/*.spec.js"
-        ], {
-            read: false
-        })
-        .pipe(mocha({
-            reporter: "spec"
-        }));
-
-});
+gulp.task("test_node", shell.task([
+    'cucumber.js'
+]));
 
 gulp.task("default", (cb) => {
     runSequence(
         "clean",
         [
-            "ts_compile_es6_test",
+            "ts_compile_es6_features",
             "ts_compile_es6_dist",
             "copyAssetsToDist",
+            "copyAssetsToFeatures",
         ],
         [
             "test_node",
