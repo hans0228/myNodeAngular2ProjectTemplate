@@ -254,7 +254,8 @@ gulp.task('ts_compile_es6_dist', () => {
 });
 
 gulp.task("test_node", shell.task([
-    'cucumber.js'
+    'cucumber.js --format progress'
+    //'cucumber.js --format pretty'
 ]));
 
 gulp.task("default", (cb) => {
