@@ -1,3 +1,4 @@
+@trytocatchtheexceptions
 Feature: try to catch the exceptions.
 
   Scenario: Use "try catch" syntax to catch the excetpion.

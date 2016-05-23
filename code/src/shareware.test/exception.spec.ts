@@ -5,10 +5,19 @@ import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 import {AppHelper} from "./../shareware/appHelper";
 
+let sandbox: Sinon.SinonSandbox;
+var prepareToRun = (_self, tag: string) => {
+    _self.Before({ tags: [tag] }, (scenario: any) => {
+        sandbox = sinon.sandbox.create();
+    });
+    _self.After({ tags: [tag] }, (scenario) => {
+        sandbox.restore();
+    });
+};
+
 export = function () {
 
-    var step = <cucumber.StepDefinitions>this;
-    var hook = <cucumber.Hooks>this;
+    prepareToRun(this, "@trytocatchtheexceptions");
 
     let act: string;
     this.When(/^Throw exception "([^"]*)"\.$/, function (exception1) {

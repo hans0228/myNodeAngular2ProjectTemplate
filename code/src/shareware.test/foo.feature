@@ -1,3 +1,4 @@
+@testeasyclass
 Feature: test easy class
 
 	Scenario: Test the method of getName.
