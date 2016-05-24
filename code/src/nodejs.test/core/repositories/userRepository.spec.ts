@@ -1,78 +1,77 @@
 /// <reference path="../../../../typings/index.d.ts" />
 
 import "reflect-metadata";
+import * as _ from "underscore";
 import {assert} from "chai";
 import * as sinon from "sinon";
 import * as proxyquire from "proxyquire";
 import {DbContext} from "../../../nodejs/core/common/dbContext";
 var mockgoose = require("mockgoose");
 
+
 import {AppHelper} from "../../../shareware/appHelper";
 import {UserRepository, IUserEntity} from "../../../nodejs/core/repositories/userRepository";
 import {BaseRepository} from "../../../nodejs/core/repositories/baseRepository";
 
-let sandbox: Sinon.SinonSandbox;
 let mydb: DbContext;
-
-let prepareToRun = () => {
-    before(async (done: MochaDone) => {
-
-        mydb = new DbContext("xxx");
+let sandbox: Sinon.SinonSandbox;
+var prepareToRun = (_self, tag: string) => {
+    _self.Before({ tags: [tag] }, async (scenario: any) => {
+		mydb = new DbContext("xxx");
         mydb.isInMemory = true;
         await mydb.connectAsync();
-        sandbox = sinon.sandbox.create();
-        done();
-
+		sandbox = sinon.sandbox.create();
     });
-    after(async (done: MochaDone) => {
-
-        sandbox.restore();
-        await mydb.closeAsync();
-        done();
-
+    _self.After({ tags: [tag] }, async (scenario) => {
+		await mydb.closeAsync();
+		sandbox.restore();
     });
 };
 
-describe(`Feature: Store the data to the collection of user`, () => {
+export = function () {
 
-    describe(`Scenario: create the user and store to database`, () => {
+	prepareToRun(this, "@ce480339-62e5-4681-9cf4-8d4ec91ae14e");
 
-        prepareToRun();
+	let userRep: UserRepository;
+	let fakeUser;
 
-        let userRep: UserRepository;
+	this.Given(/^Prepare the user data\.$/, function (arr) {
 
-        it(`Given: I use the UserRepository.`, () => {
+		fakeUser = arr.hashes()[0]
+		userRep = new UserRepository();
 
-            userRep = new UserRepository();
+	});
 
-        });
-        it(`When: add user data.`, async () => {
+	this.When(/^Add user data to database\.$/, async function () {
 
-            //add
-            var newObj = userRep.createNewEntity();
-            newObj.name = "Bibby";
-            newObj.age = 18;
-            newObj.sex = true;
-            newObj.birthday = new Date();
-            userRep.add(newObj);
-            await userRep.saveChangeAsync();
+		//add
+		var newObj = userRep.createNewEntity();
+		newObj = _.extend(newObj, fakeUser);
+		userRep.add(newObj);
+		await userRep.saveChangeAsync();
 
-        });
-        it(`Then: the data is the same as user data.`, async () => {
+	});
 
-            //retrive
-            var getAllUsersAsync = () => {
+	this.Then(/^There is a user in database\.$/, async function () {
 
-                return userRep.getAll()
-                    .find({})
-                    .exec();
+		//retrive
+		var getAllUsersAsync = () => {
 
-            }
-            var all = await getAllUsersAsync();
-            assert.equal(all.length, 1);
+			return userRep.getAll()
+				.find({})
+				.exec();
 
-        });
+		}
+		
+		var all = await getAllUsersAsync();
+		assert.equal(all.length, 1);
 
-    });
+		var uu = all[0];
+		assert.equal(uu.name, fakeUser.name);
+		assert.equal(uu.age, fakeUser.age);
+		assert.deepEqual(uu.birthday, new Date(fakeUser.birthday));
 
-});
+	});
+
+
+};

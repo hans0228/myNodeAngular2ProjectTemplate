@@ -17,7 +17,7 @@ var prepareToRun = (_self, tag: string) => {
 
 export = function () {
 
-    prepareToRun(this, "@trytocatchtheexceptions");
+    prepareToRun(this, "@ec5b5b98-e48e-494f-b2b6-7219f66b74a4");
 
     let act: string;
     this.When(/^Throw exception "([^"]*)"\.$/, function (exception1) {

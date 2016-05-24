@@ -21,7 +21,7 @@ var prepareToRun = (_self, tag: string) => {
 
 export =function () {
 
-	prepareToRun(this, "@testeasyclass");
+	prepareToRun(this, "@3d06958a-2676-42a4-b240-57eeaaeb0dbd");
 
 	let f: Foo;
 	let actString: string;

@@ -1,7 +1,8 @@
-@testeasyclass
+@3d06958a-2676-42a4-b240-57eeaaeb0dbd
 Feature: test easy class
 
 	Scenario: Test the method of getName.
+	
 		Given Prepare the Foo class.
 		When Exectute the method of getName.
 		Then The result equal "Bibby_Foo".
