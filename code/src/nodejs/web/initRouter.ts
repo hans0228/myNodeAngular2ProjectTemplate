@@ -7,4 +7,10 @@ export const InitRouter = (app: exp.Application) => {
 
     new HomeController(app);
 
+    // app.get("*", (req, res) => {
+
+    //     //back to the default page 
+    //     res.redirect("/spa");
+
+    // });
 };

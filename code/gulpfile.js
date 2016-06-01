@@ -294,7 +294,7 @@ gulp.task("server", () => {
         ext: "html js",
         env: {
             "NODE_ENV": 'development',
-            "port": 1237
+            "port": 1234
         }
         //ignore: ["ignored.js"],
         //tasks: ["lint"] ,

@@ -1,5 +1,8 @@
 /// <reference path="../../../../typings/index.d.ts" />
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {SPAComponent} from "./spa/SPAComponent";
+import {ROUTER_PROVIDERS} from '@angular/router';
+import {myRouterComponent} from "./spa/myRouterComponent";
 
-bootstrap(SPAComponent);
+bootstrap(myRouterComponent,[
+	ROUTER_PROVIDERS
+]);
