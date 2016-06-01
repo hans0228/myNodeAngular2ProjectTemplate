@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/browser.d.ts" />
+/// <reference path="../../../../../typings/index.d.ts" />
 import {Component, Inject, forwardRef} from "@angular/core";
 
 import {HomeService} from "../../../../systemjs/client/scripts/home/HomeService";

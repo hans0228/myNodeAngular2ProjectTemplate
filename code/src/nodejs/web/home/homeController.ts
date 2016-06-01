@@ -11,7 +11,15 @@ export class HomeController extends BaseController {
         super(app);
 
         this.app.get("/", (req, res) => this.indexAsync(req, res));
+        this.app.get("/spa", (req, res) => this.spa(req, res));
         this.app.get("/api", (req, res) => this.apiAsync(req, res));
+    }
+
+    private spa(req: exp.Request, res: exp.Response) {
+
+        var url = "/scripts/systemjs/client/scripts/spa/layout.html";
+        res.redirect(url);
+
     }
 
     private async indexAsync(req: exp.Request, res: exp.Response) {
