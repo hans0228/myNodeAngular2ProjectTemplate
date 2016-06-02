@@ -9,8 +9,10 @@ import {AppHelper} from "../../../../shareware/appHelper";
 	template: `
 	<h2>Page1</h2>
 	<p>date: {{date}}</p>
-	searchQuery: <input type="text" [(ngModel)]="searchQuery" />
+	searchQuery: <input type="text" [(ngModel)]="searchQuery" /> 
 	<button (click)="search()">search</button>
+	<hr />
+	{{searchQuery}}
 	`
 
 })
