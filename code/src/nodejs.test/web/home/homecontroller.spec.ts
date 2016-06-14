@@ -15,140 +15,133 @@ import {InitRouter} from "./../../../nodejs/web/initRouter";
 
 import * as exp from "express";
 
-let sandbox: Sinon.SinonSandbox;
 let mydb: DbContext;
+let sandbox: Sinon.SinonSandbox;
 let app;
-
-let prepareToRun = () => {
-    before(async (done: MochaDone) => {
-
-        mydb = new DbContext("xxx");
+var prepareToRun = (_self, tag: string) => {
+    _self.Before({ tags: [tag] }, async (scenario: any) => {
+		mydb = new DbContext("xxx");
         mydb.isInMemory = true;
         await mydb.connectAsync();
-        sandbox = sinon.sandbox.create();
+		sandbox = sinon.sandbox.create();
 
 		app = exp();
 		InitRouter(app);
 
-		done();
-
     });
-    after(async (done: MochaDone) => {
+    _self.After({ tags: [tag] }, async (scenario) => {
+		await mydb.closeAsync();
+		sandbox.restore();
 
-        sandbox.restore();
-        await mydb.closeAsync();
-		
 		app = null;
-		
-		done();
 
     });
 };
 
-describe("Feature: Homecontroller is the first backend controller.", () => {
 
-	describe(`Scenario: test the api`, () => {
+export = function () {
 
-		prepareToRun();
+	prepareToRun(this, "@11468db6-e307-4cd6-8fdb-6812285d596d");
 
-		let fakeExected: Promise<{
+	let fakeApiRequest: Promise<{
+		title: string,
+		asyncContent: string
+	}>;
+	let fakeApiAct: {
+		title: string,
+		asyncContent: string
+	};
+
+	let superFakeRequest: Promise<{
+		name: string
+	}>;
+	let superAct: {
+		name: string
+	};
+
+
+	this.Given(/^Prepare the fake request\.$/, function () {
+
+		fakeApiRequest = new Promise<{
 			title: string,
 			asyncContent: string
-		}>;
-		let act: {
-			title: string,
-			asyncContent: string
+		}>((resolve, reject) => {
+
+			request(app)
+				.get("/api")
+				.set('Accept', 'application/json')
+				.expect('Content-Type', /json/)
+				.expect(200, (err, res) => {
+
+					if (err) {
+						reject(err);
+						return;
+					}
+					resolve(res.body);
+
+				});
+
+		});
+
+
+	});
+
+	this.When(/^Exectue the fake request\.$/, async function () {
+
+		fakeApiAct = await fakeApiRequest;
+
+	});
+
+	this.Then(/^The result of title and asyncContent are "([^"]*)" and "([^"]*)"\.$/, function (title, content) {
+
+		var exp = {
+			title: title,
+			asyncContent: content
 		};
 
-		it(`Given: Prepare the fake request.`, () => {
+		assert.equal(fakeApiAct.title, exp.title);
+		assert.equal(fakeApiAct.asyncContent, exp.asyncContent);
 
-			fakeExected = new Promise<{
-				title: string,
-				asyncContent: string
-			}>((resolve, reject) => {
+	});
 
-				request(app)
-					.get("/api")
-					.set('Accept', 'application/json')
-					.expect('Content-Type', /json/)
-					.expect(200, (err, res) => {
+	this.Given(/^Prepare the supertest fake request\.$/, function () {
 
-						if (err) {
-							reject(err);
-							return;
-						}
-						resolve(res.body);
-
-					});
-
-			});
-
-		});
-		it(`When: Exectue the fake request.`, async () => {
-
-			act = await fakeExected;
-
-		});
-		it(`Then: The result of title and asyncContent are "myApp Title" and "Bibby_Foo"`, () => {
-
-			var exp = {
-				title: "myApp Title",
-				asyncContent: "Bibby_Foo"
-			};
-
-			assert.equal(act.title, exp.title);
-			assert.equal(act.asyncContent, exp.asyncContent);
-
+		app.get('/supertest', function (req, res) {
+			var obj = { name: 'tobi' };
+			res.status(200)
+				.json(obj);
 		});
 
-	})
+		superFakeRequest = new Promise<{ name: string }>((resolve, reject) => {
 
-	describe(`Scenario: test supertest`, () => {
+			request(app)
+				.get('/supertest')
+				.set('Accept', 'application/json')
+				.expect('Content-Type', /json/)
+				.expect(200, (err, res) => {
 
-		prepareToRun();
+					if (err) {
+						reject(err);
+						return;
+					}
 
-		let fakeRequest: Promise<{ name: string }>;
-		let act: { name: string };
-
-		it(`Given: Prepare the fake request.`, () => {
-
-			app.get('/supertest', function (req, res) {
-				var obj = { name: 'tobi' };
-				res.status(200)
-					.json(obj);
-			});
-
-			fakeRequest = new Promise<{ name: string }>((resolve, reject) => {
-
-				request(app)
-					.get('/supertest')
-					.set('Accept', 'application/json')
-					.expect('Content-Type', /json/)
-					.expect(200, (err, res) => {
-
-						if (err) {
-							reject(err);
-							return;
-						}
-
-						resolve(res.body);
-					});
-
-			});
-
-		});
-		it(`When: Exectue the fake request.`, async () => {
-
-			act = await fakeRequest;
-
-		});
-		it(`Then: The result of name is "tobi"`, () => {
-
-			var exp = "tobi";
-			assert.equal(act.name, exp);
+					resolve(res.body);
+				});
 
 		});
 
 	});
 
-});
+	this.When(/^Exectue the super fake request\.$/, async function () {
+
+		superAct = await superFakeRequest;
+
+	});
+
+	this.Then(/^The result of name is "([^"]*)"$/, function (name) {
+
+		assert.equal(superAct.name, name);
+
+	});
+
+};
