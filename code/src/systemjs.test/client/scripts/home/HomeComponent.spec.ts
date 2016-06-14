@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/browser.d.ts" />
+/// <reference path="../../../../../typings/index.d.ts" />
 
 import "reflect-metadata";
 
@@ -56,9 +56,10 @@ var getInjector = () => {
     return jj;
 
 };
+
 var setFakeConnection = () => {
     var backend: MockBackend = injector.get(MockBackend);
-    var p = new Promise((resolve, reject) => {
+    var p = new Promise<MockConnection>((resolve, reject) => {
         backend.connections.subscribe(c => {
             resolve(c);
         }, err => {
@@ -67,12 +68,9 @@ var setFakeConnection = () => {
     });
     return p;
 };
+
 var setFakeResponse = (con: MockConnection, opts: ResponseOptions) => {
     con.mockRespond(new Response(opts));
-};
-var getHomeComponent = () => {
-    var obj: HomeComponent = injector.get(HomeComponent);
-    return obj;
 };
 
 export = function () {
@@ -99,15 +97,43 @@ export = function () {
 
     });
 
-    this.Then(/^I should see the homeComponent\. The wording is "([^"]*)"$/, function (exp) {
+    this.Then(/^I should see The wording of homeComponent is "([^"]*)"$/, function (exp) {
 
         assert.equal(homeComponent.Wording, exp);
 
     });
 
-    this.Then(/^I should see the homeComponent\. The asyncWording is "([^"]*)"$/, function (exp) {
+    this.Then(/^I should see the asyncWording of homeComponent is "([^"]*)"$/, function (exp) {
 
         assert.equal(homeComponent.AsyncWording, exp);
+
+    });
+
+    let homeService: HomeService;
+    var serverAct: string;
+
+    this.Given(/^I get the HomeService\.$/, function (table) {
+
+        homeService = injector.get(HomeService);
+
+        var opts = new ResponseOptions();
+        opts.body = table.hashes()[0];
+        opts.status = 200;
+        setFakeConnection()
+            .then(con => setFakeResponse(con, opts));
+
+    });
+
+    this.When(/^I call the getServerDataAsync\.$/, async function () {
+
+        serverAct = await homeService.getServerDataAsync();
+
+    });
+
+    this.Then(/^The result is the data\.$/, function (table) {
+
+        var exp = table.hashes()[0]
+        assert.deepEqual(serverAct, exp);
 
     });
 

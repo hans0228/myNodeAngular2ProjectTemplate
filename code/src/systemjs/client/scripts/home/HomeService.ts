@@ -1,7 +1,13 @@
 import {Injectable} from '@angular/core';
+import {Http, Response} from "@angular/http";
+import 'rxjs/Rx';
+
+import {AppHelper} from "./../../../../shareware/appHelper";
 
 @Injectable()
 export class HomeService {
+
+    constructor(private http: Http) { }
 
     private asyncWording = "Bibby";
 
@@ -13,6 +19,15 @@ export class HomeService {
             }, 500);
         });
         return p;
+
+    }
+
+    getServerDataAsync() {
+
+        var url = "/abc/cde";
+        return this.http.get(url)
+            .map<string>(r => r.json())
+            .toPromise();
 
     }
 
