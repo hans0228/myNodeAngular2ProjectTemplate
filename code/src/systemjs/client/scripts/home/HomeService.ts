@@ -26,7 +26,11 @@ export class HomeService {
 
         var url = "/abc/cde";
         return this.http.get(url)
-            .map<string>(r => r.json())
+            .map<string>(r => {
+                if (r.status != 200)
+                    throw Error("xxxxxx");
+                return r.json();
+            })
             .toPromise();
 
     }

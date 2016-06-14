@@ -10,7 +10,7 @@ import {Bar} from "../shareware/bar";
 import {Foo} from "../shareware/foo";
 
 let sandbox: Sinon.SinonSandbox;
-var prepareToRun = (_self, tag: string) => {
+let prepareToRun = (_self, tag: string) => {
 	_self.Before({ tags: [tag] }, (scenario: any) => {
 		sandbox = sinon.sandbox.create();
 	});

@@ -18,7 +18,7 @@ import * as exp from "express";
 let mydb: DbContext;
 let sandbox: Sinon.SinonSandbox;
 let app;
-var prepareToRun = (_self, tag: string) => {
+let prepareToRun = (_self, tag: string) => {
     _self.Before({ tags: [tag] }, async (scenario: any) => {
 		mydb = new DbContext("xxx");
         mydb.isInMemory = true;

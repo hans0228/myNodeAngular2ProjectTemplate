@@ -6,7 +6,7 @@ import * as proxyquire from "proxyquire";
 import {AppHelper} from "./../shareware/appHelper";
 
 let sandbox: Sinon.SinonSandbox;
-var prepareToRun = (_self, tag: string) => {
+let prepareToRun = (_self, tag: string) => {
     _self.Before({ tags: [tag] }, (scenario: any) => {
         sandbox = sinon.sandbox.create();
     });

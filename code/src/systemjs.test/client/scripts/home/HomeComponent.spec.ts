@@ -16,7 +16,7 @@ import {AppHelper} from "./../../../../shareware/appHelper";
 
 let sandbox: Sinon.SinonSandbox;
 let injector: Injector;
-var prepareToRun = (_self, tag: string) => {
+let prepareToRun = (_self, tag: string) => {
     _self.Before({ tags: [tag] }, (scenario: any) => {
         sandbox = sinon.sandbox.create();
         injector = getInjector();
@@ -26,8 +26,7 @@ var prepareToRun = (_self, tag: string) => {
         injector = null;
     });
 };
-
-var getInjector = () => {
+let getInjector = () => {
 
     var jj = ReflectiveInjector.resolveAndCreate([
 
@@ -56,21 +55,13 @@ var getInjector = () => {
     return jj;
 
 };
-
-var setFakeConnection = () => {
+let setFakeResponse = (opts: ResponseOptions) => {
     var backend: MockBackend = injector.get(MockBackend);
-    var p = new Promise<MockConnection>((resolve, reject) => {
-        backend.connections.subscribe(c => {
-            resolve(c);
-        }, err => {
-            reject(err);
-        });
+    backend.connections.subscribe(c => {
+        c.mockRespond(new Response(opts));
+    }, err => {
+        throw Error("MockBackend errors...");
     });
-    return p;
-};
-
-var setFakeResponse = (con: MockConnection, opts: ResponseOptions) => {
-    con.mockRespond(new Response(opts));
 };
 
 export = function () {
@@ -119,8 +110,8 @@ export = function () {
         var opts = new ResponseOptions();
         opts.body = table.hashes()[0];
         opts.status = 200;
-        setFakeConnection()
-            .then(con => setFakeResponse(con, opts));
+
+        setFakeResponse(opts);
 
     });
 
