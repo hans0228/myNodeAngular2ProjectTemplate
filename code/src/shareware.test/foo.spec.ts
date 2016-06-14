@@ -19,7 +19,7 @@ var prepareToRun = (_self, tag: string) => {
 	});
 };
 
-export =function () {
+export = function () {
 
 	prepareToRun(this, "@3d06958a-2676-42a4-b240-57eeaaeb0dbd");
 

@@ -38,7 +38,6 @@ var prepareToRun = (_self, tag: string) => {
     });
 };
 
-
 export = function () {
 
 	prepareToRun(this, "@11468db6-e307-4cd6-8fdb-6812285d596d");

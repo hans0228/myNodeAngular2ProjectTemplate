@@ -12,25 +12,21 @@ import * as sinon from "sinon";
 
 import {HomeComponent} from "../../../../systemjs/client/scripts/home/HomeComponent";
 import {HomeService} from "../../../../systemjs/client/scripts/home/HomeService";
+import {AppHelper} from "./../../../../shareware/appHelper";
 
 let sandbox: Sinon.SinonSandbox;
 let injector: Injector;
-let prepareToRun = () => {
-    before(async (done: MochaDone) => {
-
+var prepareToRun = (_self, tag: string) => {
+    _self.Before({ tags: [tag] }, (scenario: any) => {
         sandbox = sinon.sandbox.create();
         injector = getInjector();
-        done();
-
     });
-    after(async (done: MochaDone) => {
-
+    _self.After({ tags: [tag] }, (scenario) => {
         sandbox.restore();
         injector = null;
-        done();
-
     });
 };
+
 var getInjector = () => {
 
     var jj = ReflectiveInjector.resolveAndCreate([
@@ -79,56 +75,40 @@ var getHomeComponent = () => {
     return obj;
 };
 
-describe(`Features: HomeComponent is the first component in the client side.`, () => {
+export = function () {
 
-    describe(`Scenario: show greet wording.`, () => {
+    prepareToRun(this, "@bfa80860-bad5-4778-9015-8f31e8310071");
 
-        prepareToRun();
+    let homeComponent: HomeComponent;
 
-        let homeComponent: HomeComponent;
+    this.Given(/^I am in the HomeComponent\.$/, function () {
 
-        it(`Given: I am in the HomeComponent.`, () => {
-
-            homeComponent = injector.get(HomeComponent);
-
-        });
-        it(`When: I call the showGreetLog method and put the "Bibby".`, () => {
-
-            homeComponent.showGreetLog("Bibby");
-
-        });
-        it(`Then: I should see the homeComponent.Wording is "Hello, Bibby"`, () => {
-
-            var expected = "Hello, Bibby";
-            assert.equal(homeComponent.Wording, expected);
-
-        });
+        homeComponent = injector.get(HomeComponent);
 
     });
 
-    describe(`Scenario: show greet wording async.`, () => {
+    this.When(/^I call the showGreetLog method and put the "([^"]*)"\.$/, function (name) {
 
-        prepareToRun();
-
-        let homeComponent: HomeComponent;
-
-        it(`Given: I am in the HomeComponent.`, () => {
-
-            homeComponent = injector.get(HomeComponent);
-
-        });
-        it(`When: I call the showGreetLogAsync method.`, async () => {
-
-            await homeComponent.showGreetLogAsync();
-
-        });
-        it(`Then: I should see the homeComponent.AsyncWording is "Hello, Bibby"`, () => {
-
-            var expectedAsync = "Hello, Bibby async";
-            assert.equal(homeComponent.AsyncWording, expectedAsync);
-
-        });
+        homeComponent.showGreetLog(name);
 
     });
 
-});
+    this.When(/^I call the showGreetLogAsync method\.$/, async function () {
+
+        await homeComponent.showGreetLogAsync();
+
+    });
+
+    this.Then(/^I should see the homeComponent\. The wording is "([^"]*)"$/, function (exp) {
+
+        assert.equal(homeComponent.Wording, exp);
+
+    });
+
+    this.Then(/^I should see the homeComponent\. The asyncWording is "([^"]*)"$/, function (exp) {
+
+        assert.equal(homeComponent.AsyncWording, exp);
+
+    });
+
+};

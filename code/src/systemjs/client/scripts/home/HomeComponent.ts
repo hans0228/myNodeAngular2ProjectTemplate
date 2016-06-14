@@ -36,7 +36,7 @@ export class HomeComponent {
     async showGreetLogAsync() {
 
         var wording = await this.homeSer.getNameAsync();
-        this.AsyncWording = await `Hello, ${wording} async`;;
+        this.AsyncWording = `Hello, ${wording} async`;
 
     }
 
