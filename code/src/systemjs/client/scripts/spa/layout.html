@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>myApp Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="/scripts/node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="/scripts/node_modules/zone.js/dist/zone.js"></script>
+    <script src="/scripts/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/scripts/node_modules/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="/scripts/systemjs/client/scripts/systemjs.config.spa.js"></script>
+    <script>
+        System.import('app').catch(function(err){ console.error(err);  });
+    </script>
+
+</head>
+
+<body>
+
+	<ul>
+		<li><a href="/spa">Home</a></li>
+	</ul>
+
+	<hr />
+	<h1>SPA</h1>
+
+	<p>Bibby_Foo</p>
+	<hr />
+	<my-app>Loading...</my-app> 
+
+</body>
+
+</html>
