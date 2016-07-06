@@ -21,3 +21,4 @@ Todo
 - rename the js script folder name from "node_modules" to "lib".
 - add the task to deploy to azure web service in gulp.
 - upgrade the angular 2 to latest version.
+- add the exception handler for express
